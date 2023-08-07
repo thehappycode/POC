@@ -24,7 +24,7 @@ public class BooksController : ControllerBase
 
     [ActionName(nameof(GetAsync))]
     [HttpGet("GetAsync/{id}")]
-    public async Task<IActionResult> GetAsync([FromQuery] Guid id)
+    public async Task<IActionResult> GetAsync(Guid id)
     {
         var book = await _booksService.GetAsync(id);
         if (book is null)
@@ -47,7 +47,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpPut("UpdateAsync/{id}")]
-    public async Task<IActionResult> UpdateAsync([FromQuery] Guid id, [FromBody] BookModel book)
+    public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] BookModel book)
     {
         var existingBook = await _booksService.GetAsync(id);
         if (existingBook is null)
@@ -60,7 +60,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpDelete("RemoveAsync/{id}")]
-    public async Task<IActionResult> RemoveAsync([FromQuery] Guid id)
+    public async Task<IActionResult> RemoveAsync(Guid id)
     {
         var existingBook = await _booksService.GetAsync(id);
         if (existingBook is null)
