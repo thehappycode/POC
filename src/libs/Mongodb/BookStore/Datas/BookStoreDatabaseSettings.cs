@@ -1,8 +1,7 @@
+using Mongodb.Commons.Datas;
+
 namespace Mongodb.BookStore.Datas;
 
-public class BookStoreDatabaseSettings
+public class BookStoreDatabaseSettings : BaseDataBaseSettings
 {
-    public string ConnectionString { get; set; } = null!;
-    public string DataBaseName { get; set; } = null!;
-    public string BooksCollectionName { get; set; } = null!;
 }

@@ -6,23 +6,18 @@ using MongoDB.Driver;
 
 namespace Mongodb.RestaurantStore.Services;
 
-public class InsertServcie : IInsertServcie
+public class ReplaceService : IReplaceService
 {
     private readonly IMongoCollection<RestaurantModel> _restaurantsCollection;
 
-    public InsertServcie(
+    public ReplaceService(
         ISetupService<RestaurantDataBaseSettings, RestaurantModel> setupService
     )
     {
         _restaurantsCollection = setupService.Setup();
     }
-    public async Task InsertOneAsync(RestaurantModel restaurantModel)
+    public Task ReplaceOneAsync(Guid restaurantId, RestaurantModel restaurantModel)
     {
-        await _restaurantsCollection.InsertOneAsync(restaurantModel);
+        throw new NotImplementedException();
     }
-    public async Task InsertManyAsync(IEnumerable<RestaurantModel> restaurantModels)
-    {
-        await _restaurantsCollection.InsertManyAsync(restaurantModels);
-    }
-
 }

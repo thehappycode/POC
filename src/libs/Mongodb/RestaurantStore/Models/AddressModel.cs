@@ -2,7 +2,7 @@ namespace Mongodb.RestaurantStore.Models;
 
 public class AddressModel
 {
-    public Guid AddressId { get; set; } = new Guid();
+    public Guid AddressId { get; set; } = Guid.NewGuid();
 
     public string Building { get; set; } = null!;
 

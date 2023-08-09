@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Options;
+using Mongodb.Commons.IServices;
 using Mongodb.RestaurantStore.Datas;
 using Mongodb.RestaurantStore.IServices;
 using Mongodb.RestaurantStore.Models;
@@ -12,20 +12,10 @@ public class FindService : IFindService
     private readonly IMongoCollection<RestaurantModel> _restaurantsCollection;
 
     public FindService(
-        IOptions<RestaurantDataSettings> restaurantDataSettings
+        ISetupService<RestaurantDataBaseSettings, RestaurantModel> setupService
     )
     {
-         var mongoClient = new MongoClient(
-            restaurantDataSettings.Value.ConnectionString
-        );
-
-        var mongoDatabase = mongoClient.GetDatabase(
-            restaurantDataSettings.Value.DataBaseName
-        );
-
-        _restaurantsCollection = mongoDatabase.GetCollection<RestaurantModel>(
-            restaurantDataSettings.Value.BooksCollectionName
-        );
+        _restaurantsCollection = setupService.Setup();
     }
 
     public async Task<RestaurantModel?> FindOneAsyncUsingBuilders(Guid restaurantId)
@@ -48,7 +38,7 @@ public class FindService : IFindService
     {
         var filter = Builders<RestaurantModel>
             .Filter.In(p => p.RestaurantId, restaurantIds);
-        
+
         return await _restaurantsCollection
             .Find(filter)
             .ToListAsync();

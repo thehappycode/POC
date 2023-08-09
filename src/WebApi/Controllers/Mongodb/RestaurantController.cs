@@ -10,15 +10,18 @@ public class RestaurantController : ControllerBase
 {
     private readonly IInsertServcie _insertServcie;
     private readonly IFindService _findService;
+    private readonly IUpdateService _updateService;
 
     public RestaurantController(
         IInsertServcie insertServcie,
-        IFindService findService
-
+        IFindService findService,
+        IUpdateService updateService
     )
     {
         _insertServcie = insertServcie;
         _findService = findService;
+        _updateService = updateService;
+
     }
 
     [ActionName(nameof(GetOneRestaurantAsyncUsingBuilders))]
@@ -58,7 +61,7 @@ public class RestaurantController : ControllerBase
     }
 
     [ActionName(nameof(GetManyRestaurantAsyncUsingLinq))]
-    [HttpGet("GetManyRestaurantAsyncUsingLinq")]
+    [HttpPost("GetManyRestaurantAsyncUsingLinq")]
     public async Task<IActionResult> GetManyRestaurantAsyncUsingLinq([FromBody] IEnumerable<Guid> ids)
     {
         var restaurantModels = await _findService.FindManyAsyncUsingLinq(ids);
@@ -84,5 +87,11 @@ public class RestaurantController : ControllerBase
         var ids = restaurantModels.Select(p => p.RestaurantId);
 
         return CreatedAtAction(nameof(GetManyRestaurantAsyncUsingBuilders), new { ids = ids }, restaurantModels);
+    }
+
+    [HttpPut("UpdateOneRestaurantAsync/{id}")]
+    public async Task<IActionResult> UpdateOneRestaurantAsync(Guid id, [FromBody] RestaurantModel restaurantModel){
+        var result = await _updateService.UpdateOneAsync(id, restaurantModel);
+        return Ok(result);
     }
 }

@@ -1,4 +1,6 @@
 using Mongodb.BookStore.Datas;
+using Mongodb.Commons.IServices;
+using Mongodb.Commons.Services;
 using Mongodb.IServices;
 using Mongodb.RestaurantStore.Datas;
 using Mongodb.RestaurantStore.IServices;
@@ -9,6 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+// Commons
+builder.Services.AddScoped(typeof(ISetupService<,>), typeof(SetupService<,>));
+
 // BookStore
 builder.Services.Configure<BookStoreDatabaseSettings>(
     builder.Configuration.GetSection("Mongodb:BookStoreDatabase")
@@ -16,11 +21,12 @@ builder.Services.Configure<BookStoreDatabaseSettings>(
 builder.Services.AddScoped<IBooksService, BooksService>();
 
 // RestaurantStore
-builder.Services.Configure<RestaurantDataSettings>(
+builder.Services.Configure<RestaurantDataBaseSettings>(
     builder.Configuration.GetSection("Mongodb:RestaurantStoreDatabase")
 );
 builder.Services.AddScoped<IFindService, FindService>();
 builder.Services.AddScoped<IInsertServcie, InsertServcie>();
+builder.Services.AddScoped<IUpdateService, UpdateService>();
 
 
 builder.Services.AddControllers()

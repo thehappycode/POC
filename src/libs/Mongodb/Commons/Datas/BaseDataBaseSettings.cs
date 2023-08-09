@@ -1,6 +1,6 @@
-namespace Mongodb.RestaurantStore.Datas;
+namespace Mongodb.Commons.Datas;
 
-public class RestaurantDataSettings
+public class BaseDataBaseSettings
 {
     public string ConnectionString { get; set; } = null!;
     public string DataBaseName { get; set; } = null!;

@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Options;
 using Mongodb.BookStore.Datas;
 using Mongodb.BookStore.Models;
+using Mongodb.Commons.IServices;
 using Mongodb.IServices;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -12,20 +13,10 @@ public class BooksService : IBooksService
     private readonly IMongoCollection<BookModel> _booksCollection;
 
     public BooksService(
-        IOptions<BookStoreDatabaseSettings> bookStoreDatabaseSettings
+        ISetupService<BookStoreDatabaseSettings, BookModel> setupService
     )
     {
-        var mongoClient = new MongoClient(
-            bookStoreDatabaseSettings.Value.ConnectionString
-        );
-
-        var mongoDatabase = mongoClient.GetDatabase(
-            bookStoreDatabaseSettings.Value.DataBaseName
-        );
-
-        _booksCollection = mongoDatabase.GetCollection<BookModel>(
-            bookStoreDatabaseSettings.Value.BooksCollectionName
-        );
+        _booksCollection = setupService.Setup();
     }
 
     public async Task<BookModel?> GetAsync(Guid id) =>
@@ -40,7 +31,7 @@ public class BooksService : IBooksService
     {
         // Fileter
         IMongoQueryable<BookModel> queryable = _booksCollection.AsQueryable();
-        
+
         if (search.TextSearch is not null)
         {
 

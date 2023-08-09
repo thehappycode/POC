@@ -8,7 +8,7 @@ public class RestaurantModel
 
     public string Name { get; set; } = null!;
 
-    public Guid RestaurantId { get; set; } = new Guid();
+    public Guid RestaurantId { get; set; } = Guid.NewGuid();
 
     public string Cuisine { get; set; } = null!;
 
