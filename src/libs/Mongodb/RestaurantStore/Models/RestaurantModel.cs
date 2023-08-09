@@ -1,7 +1,6 @@
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
-namespace Mongodb.UsageExamples.Models;
+namespace Mongodb.RestaurantStore.Models;
 
 public class RestaurantModel
 {
@@ -9,7 +8,7 @@ public class RestaurantModel
 
     public string Name { get; set; } = null!;
 
-    public string RestaurantId { get; set; } = null!;
+    public Guid RestaurantId { get; set; } = new Guid();
 
     public string Cuisine { get; set; } = null!;
 

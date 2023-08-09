@@ -1,9 +1,9 @@
-using MongoDB.Bson.Serialization.Attributes;
-
-namespace Mongodb.UsageExamples.Models;
+namespace Mongodb.RestaurantStore.Models;
 
 public class AddressModel
 {
+    public Guid AddressId { get; set; } = new Guid();
+
     public string Building { get; set; } = null!;
 
     public double[] Coordinates { get; set; } = null!;
