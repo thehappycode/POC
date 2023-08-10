@@ -16,8 +16,19 @@ public class ReplaceService : IReplaceService
     {
         _restaurantsCollection = setupService.Setup();
     }
-    public Task ReplaceOneAsync(Guid restaurantId, RestaurantModel restaurantModel)
+    public async Task<ReplaceOneResult> ReplaceOneAsync(Guid restaurantId, RestaurantModel restaurantModel)
     {
-        throw new NotImplementedException();
+        var filter = Builders<RestaurantModel>
+            .Filter
+            .Eq(p => p.RestaurantId, restaurantId);
+
+        var existing = await _restaurantsCollection
+            .Find(filter)
+            .FirstOrDefaultAsync();
+
+        if(existing is null)
+            throw new Exception("Not found restaurant!");
+
+        return await _restaurantsCollection.ReplaceOneAsync(filter, restaurantModel);
     }
 }

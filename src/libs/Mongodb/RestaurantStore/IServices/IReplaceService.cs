@@ -1,8 +1,9 @@
 using Mongodb.RestaurantStore.Models;
+using MongoDB.Driver;
 
 namespace Mongodb.RestaurantStore.IServices;
 
 public interface IReplaceService
 {
-    Task ReplaceOneAsync(Guid restaurantId, RestaurantModel restaurantModel);
+    Task<ReplaceOneResult> ReplaceOneAsync(Guid restaurantId, RestaurantModel restaurantModel);
 }

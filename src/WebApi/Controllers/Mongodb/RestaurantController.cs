@@ -11,17 +11,19 @@ public class RestaurantController : ControllerBase
     private readonly IInsertServcie _insertServcie;
     private readonly IFindService _findService;
     private readonly IUpdateService _updateService;
+    private readonly IReplaceService _replaceService;
 
     public RestaurantController(
         IInsertServcie insertServcie,
         IFindService findService,
-        IUpdateService updateService
+        IUpdateService updateService,
+        IReplaceService replaceService
     )
     {
         _insertServcie = insertServcie;
         _findService = findService;
         _updateService = updateService;
-
+        _replaceService = replaceService;
     }
 
     [ActionName(nameof(GetOneRestaurantAsyncUsingBuilders))]
@@ -92,6 +94,12 @@ public class RestaurantController : ControllerBase
     [HttpPut("UpdateOneRestaurantAsync/{id}")]
     public async Task<IActionResult> UpdateOneRestaurantAsync(Guid id, [FromBody] RestaurantModel restaurantModel){
         var result = await _updateService.UpdateOneAsync(id, restaurantModel);
+        return Ok(result);
+    }
+
+    [HttpPut("ReplaceOneRestaurantAsync/{id}")]
+    public async Task<IActionResult> ReplaceOneRestaurantAsync(Guid id, [FromBody] RestaurantModel restaurantModel){
+        var result = await _replaceService.ReplaceOneAsync(id, restaurantModel);
         return Ok(result);
     }
 }
