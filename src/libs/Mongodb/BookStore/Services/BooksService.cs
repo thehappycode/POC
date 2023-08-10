@@ -13,10 +13,10 @@ public class BooksService : IBooksService
     private readonly IMongoCollection<BookModel> _booksCollection;
 
     public BooksService(
-        ISetupService<BookStoreDatabaseSettings, BookModel> setupService
+        IOptions<BookStoreDatabaseSettings> bookStoreDatabaseSettings
     )
     {
-        _booksCollection = setupService.Setup();
+        _booksCollection = bookStoreDatabaseSettings.Value.Setup();
     }
 
     public async Task<BookModel?> GetAsync(Guid id) =>
