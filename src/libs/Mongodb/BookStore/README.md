@@ -18,5 +18,10 @@ builder.Services.AddControllers()
     );
 ```
 
+### Dependence Injection với Generic
+```
+builder.Services.AddScoped(typeof(IService<,>), typeof(Service<,>));
+```
+
 ### Tài liệu tham khảo
 https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-7.0&tabs=visual-studio-code

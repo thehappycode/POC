@@ -1,7 +1,6 @@
 using Microsoft.Extensions.Options;
 using Mongodb.BookStore.Datas;
 using Mongodb.BookStore.Models;
-using Mongodb.Commons.IServices;
 using Mongodb.IServices;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -16,7 +15,7 @@ public class BooksService : IBooksService
         IOptions<BookStoreDatabaseSettings> bookStoreDatabaseSettings
     )
     {
-        _booksCollection = bookStoreDatabaseSettings.Value.Setup();
+        _booksCollection = bookStoreDatabaseSettings.Value.Collection;
     }
 
     public async Task<BookModel?> GetAsync(Guid id) =>

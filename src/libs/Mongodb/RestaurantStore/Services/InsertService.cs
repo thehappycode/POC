@@ -1,4 +1,4 @@
-using Mongodb.Commons.IServices;
+using Microsoft.Extensions.Options;
 using Mongodb.RestaurantStore.Datas;
 using Mongodb.RestaurantStore.IServices;
 using Mongodb.RestaurantStore.Models;
@@ -11,10 +11,10 @@ public class InsertServcie : IInsertServcie
     private readonly IMongoCollection<RestaurantModel> _restaurantsCollection;
 
     public InsertServcie(
-        ISetupService<RestaurantDataBaseSettings, RestaurantModel> setupService
+    IOptions<RestaurantDataBaseSettings> restaurantStoreDatabaseSettings
     )
     {
-        _restaurantsCollection = setupService.Setup();
+        _restaurantsCollection = restaurantStoreDatabaseSettings.Value.Collection;
     }
     public async Task InsertOneAsync(RestaurantModel restaurantModel)
     {

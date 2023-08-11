@@ -1,6 +1,4 @@
 using Mongodb.BookStore.Datas;
-using Mongodb.Commons.IServices;
-using Mongodb.Commons.Services;
 using Mongodb.IServices;
 using Mongodb.RestaurantStore.Datas;
 using Mongodb.RestaurantStore.IServices;
@@ -10,9 +8,6 @@ using Mongodb.Service;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-// Commons
-builder.Services.AddScoped(typeof(ISetupService<,>), typeof(SetupService<,>));
 
 // BookStore
 builder.Services.Configure<BookStoreDatabaseSettings>(

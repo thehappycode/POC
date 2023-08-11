@@ -2,24 +2,33 @@ using MongoDB.Driver;
 
 namespace Mongodb.Commons.Datas;
 
-public abstract class BaseDataBaseSettings <T>
+public abstract class BaseDataBaseSettings<T>
     where T : class
 {
-    public string ConnectionString { get; set; } = null!;
-    public string DataBaseName { get; set; } = null!;
-    public string BooksCollectionName { get; set; } = null!;
-    public IMongoCollection<T> Setup()
+    private string ConnectionString { get; set; } = null!;
+    private string DataBaseName { get; set; } = null!;
+    private string CollectionName { get; set; } = null!;
+
+    public IMongoCollection<T> Collection { get; set; } = null!;
+
+    public IMongoCollection<T> GetCollection()
     {
-        var mongoClient = new MongoClient(
-            ConnectionString
-        );
+        if (Collection is null)
+        {
 
-        var mongoDatabase = mongoClient.GetDatabase(
-            DataBaseName
-        );
+            var mongoClient = new MongoClient(
+                ConnectionString
+            );
 
-        return mongoDatabase.GetCollection<T>(
-            BooksCollectionName
-        );
+            var mongoDatabase = mongoClient.GetDatabase(
+                DataBaseName
+            );
+
+            Collection = mongoDatabase.GetCollection<T>(
+                CollectionName
+            );
+        }
+
+        return Collection;
     }
 }
