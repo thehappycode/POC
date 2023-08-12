@@ -23,5 +23,8 @@ builder.Services.AddControllers()
 builder.Services.AddScoped(typeof(IService<,>), typeof(Service<,>));
 ```
 
+### IOptions
+Khi sử dụng IOptions lưu ý các properties phải được modifier là public.
+
 ### Tài liệu tham khảo
 https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-7.0&tabs=visual-studio-code
