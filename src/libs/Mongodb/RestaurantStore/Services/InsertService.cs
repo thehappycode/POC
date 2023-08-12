@@ -11,7 +11,7 @@ public class InsertServcie : IInsertServcie
     private readonly IMongoCollection<RestaurantModel> _restaurantsCollection;
 
     public InsertServcie(
-    IOptions<RestaurantDataBaseSettings> restaurantStoreDatabaseSettings
+        IOptions<RestaurantStoreDataBaseSettings> restaurantStoreDatabaseSettings
     )
     {
         _restaurantsCollection = restaurantStoreDatabaseSettings.Value.Collection;

@@ -4,6 +4,7 @@ namespace Mongodb.RestaurantStore.IServices;
 
 public interface IFindService
 {
+    Task<IEnumerable<RestaurantModel>> FindAllAsync();
     Task<RestaurantModel?> FindOneAsyncUsingBuilders(Guid restaurantId);
     Task<RestaurantModel?> FindOneAsyncUsingLinq(Guid restaurantId);
     Task<IEnumerable<RestaurantModel>> FindManyAsyncUsingBuilders(IEnumerable<Guid>restaurantIds);

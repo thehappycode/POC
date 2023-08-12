@@ -12,10 +12,15 @@ public class FindService : IFindService
     private readonly IMongoCollection<RestaurantModel> _restaurantsCollection;
 
     public FindService(
-    IOptions<RestaurantDataBaseSettings> restaurantStoreDatabaseSettings
+        IOptions<RestaurantStoreDataBaseSettings> restaurantStoreDatabaseSettings
     )
     {
         _restaurantsCollection = restaurantStoreDatabaseSettings.Value.Collection;
+    }
+
+    public async Task<IEnumerable<RestaurantModel>> FindAllAsync(){
+        return await _restaurantsCollection.Find(_ => true)
+            .ToListAsync();
     }
 
     public async Task<RestaurantModel?> FindOneAsyncUsingBuilders(Guid restaurantId)

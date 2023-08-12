@@ -10,7 +10,7 @@ public class UpdateService : IUpdateService
 {
     private readonly IMongoCollection<RestaurantModel> _restaurantsCollection;
     public UpdateService(
-        IOptions<RestaurantDataBaseSettings> restaurantStoreDatabaseSettings
+        IOptions<RestaurantStoreDataBaseSettings> restaurantStoreDatabaseSettings
     )
     {
         _restaurantsCollection = restaurantStoreDatabaseSettings.Value.Collection;

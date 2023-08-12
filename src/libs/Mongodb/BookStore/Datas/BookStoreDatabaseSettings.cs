@@ -3,6 +3,6 @@ using Mongodb.Commons.Datas;
 
 namespace Mongodb.BookStore.Datas;
 
-public class BookStoreDatabaseSettings : BaseDataBaseSettings<BookModel>
+public class BookStoreDatabaseSettings : BaseStoreDataBaseSettings<BookModel>
 {
 }

@@ -16,12 +16,14 @@ builder.Services.Configure<BookStoreDatabaseSettings>(
 builder.Services.AddScoped<IBooksService, BooksService>();
 
 // RestaurantStore
-builder.Services.Configure<RestaurantDataBaseSettings>(
+builder.Services.Configure<RestaurantStoreDataBaseSettings>(
     builder.Configuration.GetSection("Mongodb:RestaurantStoreDatabase")
 );
 builder.Services.AddScoped<IFindService, FindService>();
 builder.Services.AddScoped<IInsertServcie, InsertServcie>();
 builder.Services.AddScoped<IUpdateService, UpdateService>();
+builder.Services.AddScoped<IReplaceService, ReplaceService>();
+builder.Services.AddScoped<IDeleteService, DeleteService>();
 
 
 builder.Services.AddControllers()

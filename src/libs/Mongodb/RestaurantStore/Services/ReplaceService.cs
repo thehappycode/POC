@@ -11,7 +11,7 @@ public class ReplaceService : IReplaceService
     private readonly IMongoCollection<RestaurantModel> _restaurantsCollection;
 
     public ReplaceService(
-    IOptions<RestaurantDataBaseSettings> restaurantStoreDatabaseSettings
+        IOptions<RestaurantStoreDataBaseSettings> restaurantStoreDatabaseSettings
     )
     {
         _restaurantsCollection = restaurantStoreDatabaseSettings.Value.Collection;

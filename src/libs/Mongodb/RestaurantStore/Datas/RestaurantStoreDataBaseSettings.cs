@@ -4,6 +4,6 @@ using MongoDB.Driver;
 
 namespace Mongodb.RestaurantStore.Datas;
 
-public class RestaurantDataBaseSettings: BaseDataBaseSettings<RestaurantModel>
+public class RestaurantStoreDataBaseSettings: BaseStoreDataBaseSettings<RestaurantModel>
 {
 }

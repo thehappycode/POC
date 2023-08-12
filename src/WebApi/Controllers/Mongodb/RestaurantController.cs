@@ -12,18 +12,32 @@ public class RestaurantController : ControllerBase
     private readonly IFindService _findService;
     private readonly IUpdateService _updateService;
     private readonly IReplaceService _replaceService;
+    private readonly IDeleteService _deleteService;
 
     public RestaurantController(
         IInsertServcie insertServcie,
         IFindService findService,
         IUpdateService updateService,
-        IReplaceService replaceService
+        IReplaceService replaceService,
+        IDeleteService deleteService
     )
     {
         _insertServcie = insertServcie;
         _findService = findService;
         _updateService = updateService;
         _replaceService = replaceService;
+        _deleteService = deleteService;
+    }
+
+    [HttpGet("GetAllRestaurantsAsync")]
+    public async Task<IActionResult> GetAllRestaurantsAsync()
+    {
+        var restaurantModels = await _findService.FindAllAsync();
+
+        if (!restaurantModels.Any())
+            return NotFound();
+
+        return Ok(restaurantModels);
     }
 
     [ActionName(nameof(GetOneRestaurantAsyncUsingBuilders))]
@@ -68,7 +82,7 @@ public class RestaurantController : ControllerBase
     {
         var restaurantModels = await _findService.FindManyAsyncUsingLinq(ids);
 
-         if (!restaurantModels.Any())
+        if (!restaurantModels.Any())
             return NotFound();
 
         return Ok(restaurantModels);
@@ -78,7 +92,7 @@ public class RestaurantController : ControllerBase
     public async Task<IActionResult> CreateOneRestaurantAsync([FromBody] RestaurantModel restaurantModel)
     {
         await _insertServcie.InsertOneAsync(restaurantModel);
-        
+
         return CreatedAtAction(nameof(GetOneRestaurantAsyncUsingBuilders), new { id = restaurantModel.RestaurantId }, restaurantModel);
     }
 
@@ -92,14 +106,23 @@ public class RestaurantController : ControllerBase
     }
 
     [HttpPut("UpdateOneRestaurantAsync/{id}")]
-    public async Task<IActionResult> UpdateOneRestaurantAsync(Guid id, [FromBody] RestaurantModel restaurantModel){
+    public async Task<IActionResult> UpdateOneRestaurantAsync(Guid id, [FromBody] RestaurantModel restaurantModel)
+    {
         var result = await _updateService.UpdateOneAsync(id, restaurantModel);
         return Ok(result);
     }
 
     [HttpPut("ReplaceOneRestaurantAsync/{id}")]
-    public async Task<IActionResult> ReplaceOneRestaurantAsync(Guid id, [FromBody] RestaurantModel restaurantModel){
+    public async Task<IActionResult> ReplaceOneRestaurantAsync(Guid id, [FromBody] RestaurantModel restaurantModel)
+    {
         var result = await _replaceService.ReplaceOneAsync(id, restaurantModel);
+        return Ok(result);
+    }
+
+    [HttpDelete("DeleteOneRestaurantAsync/{id}")]
+    public async Task<IActionResult> DeleteOneRestaurantAsync(Guid id)
+    {
+        var result = await _deleteService.DeleteOneAsync(id);
         return Ok(result);
     }
 }
