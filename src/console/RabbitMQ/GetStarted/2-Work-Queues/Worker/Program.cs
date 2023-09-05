@@ -8,12 +8,14 @@ using var connection = factory.CreateConnection();
 using var channel = connection.CreateModel();
 
 channel.QueueDeclare(
-    queue: "hello",
-    durable: false,
+    queue: "task_queue",
+    durable: true,
     exclusive: false,
     autoDelete: false,
     arguments: null
 );
+
+channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
 
 Console.WriteLine(" [*] Waiting for messages.");
 
@@ -25,14 +27,17 @@ consumer.Received += (model, ea) => {
 
     var dots = message.Split('.').Length - 1;
     Console.WriteLine($"Dots: {dots}");
-    Thread.Sleep(dots * 1000);
+    Thread.Sleep(dots * 3000);
 
     Console.WriteLine(" [x] Done");
+
+    // here channel could also be accessed as ((EventingBasicConsumer)sender).Model
+    channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
 };
 
 channel.BasicConsume(
-    queue: "hello",
-    autoAck: true,
+    queue: "task_queue",
+    autoAck: false,
     consumer: consumer
 );
 
