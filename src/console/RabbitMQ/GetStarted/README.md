@@ -30,4 +30,16 @@ Bạn có thể setting `prefetchCount = 1` trong method `BasicQos`, để nói 
 
 Nếu tất cả consumer đều bạn thì bạn nên cân nhắc tăng thêm số consumers hoặc sử dụng một chiến lược khác.
 
-## Publish/Subscrible
+## 3. Publish/Subscrible
+
+### Exchanges
+
+Producer không bao giờ chuyển trực tiếp các messages đến queue. Thay vào đó producer sẽ chuyển messages đến `exchange`.
+
+Exchange gồm có các kiểu: `direct`, `topic`, `headers`, `fanout`.
+
+### Temporary queues
+
+### Bindings
+
+Mối quan hệ giửa exchange và queue chúng ta gọi là `binding`.
