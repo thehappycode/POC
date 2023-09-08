@@ -16,6 +16,7 @@ channel.QueueDeclare(
 string message = GetMessage(args);
 var body = Encoding.UTF8.GetBytes(message);
 
+// Durable - mark our messages as persistent
 var properties = channel.CreateBasicProperties();
 properties.Persistent = true;
 
