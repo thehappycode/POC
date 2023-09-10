@@ -56,7 +56,7 @@ Mối quan hệ giửa exchange và queue chúng ta gọi là `binding`.
 
 ## 4. Routing
 
-Routing là việc điều hướng các message đến đúng các subscribe theo cấu hình.
+Routing là việc điều hướng các message đến đúng các subscribe theo `routingKey`.
 
 ### Bindings
 
@@ -73,3 +73,20 @@ Khi sử dụng `direct` exchange thì message đến queues sẽ phải exactly
 ### Multiple bindings
 
 !["Atl Multiple bindings"](../GetStarted/imgs/direct-exchange-multiple.png "Multiple bindings")
+
+## 5. Topics
+
+### Topic exchange
+
+Cũng giống như `direct` exchange các message đến queues phải matches với `routingKey` tuy nhiên sẽ có một số lưu ý quan trọng sau:
+
+- `routingKey` của `topic` exchange có thể là danh sách các từ, được xác định bởi các dấu `chấm`.
+- `*` (start) tương ứng với một từ
+- `#` (hash) tương ứng với không hoặc nhiều từ
+
+!["Alt Topic Exchange"](../GetStarted/imgs/topic-exchange.png "Topic Exchange")
+
+Từ hình ảnh ta có thể thấy:
+
+- Q1 sẽ có binding key `*.orange.*` nghĩa là Q1 sẽ nhận message với `routingKey` phải có 3 từ trong đó bắt buộc từ thứ 2 phải là `orange`
+- Q2 sẽ có binding key `*.*.rabbit` và `lazy.#` nghĩa là Q2 sẽ nhận message với `routingKey` có ít nhất 2 từ và bắt buộc từ thứ nhất là `lazy` hoăc từ thứ 3 là `rabbit`
