@@ -1,5 +1,17 @@
 # RabbitMQ
 
+## Install RabbitMQ
+
+[Tham khảo cài đặt RabbitMQ tại đây](https://www.rabbitmq.com/download.html "Install RabbitMQ")
+
+Cài đặt RabbitMQ chạy trên docker:
+
+```docker
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.12-management
+```
+
+**Lưu ý:** *Thay thay đổi phiên bản rabbitmq khi install*
+
 ## 1. Hello World
 
 ![Atl Hello World](../GetStarted/imgs/hello-world.png "Hello World")
@@ -58,7 +70,7 @@ Mối quan hệ giửa exchange và queue chúng ta gọi là `binding`.
 
 Routing là việc điều hướng các message đến đúng các subscribe theo `routingKey`.
 
-### Bindings
+### Extra Bindings
 
 Như đã biết từ mục trước `bindings` là mối liên hệ giữa exchange và queue. Hay đơn giản queue là thừa hưởng các message từ exchange.
 
@@ -90,3 +102,41 @@ Từ hình ảnh ta có thể thấy:
 
 - Q1 sẽ có binding key `*.orange.*` nghĩa là Q1 sẽ nhận message với `routingKey` phải có 3 từ trong đó bắt buộc từ thứ 2 phải là `orange`
 - Q2 sẽ có binding key `*.*.rabbit` và `lazy.#` nghĩa là Q2 sẽ nhận message với `routingKey` có ít nhất 2 từ và bắt buộc từ thứ nhất là `lazy` hoăc từ thứ 3 là `rabbit`
+
+## 6. Remote producer call (RPC)
+
+Trong bài *2. WorkerQueues* chúng ta đã học distribute nhiều messages trong cùng một thời gian thì sẽ phụ thuộc vào nhiều consumers.
+
+Nhưng nếu chúng ta cần đợi **kết quả** trả về thì đó làm một câu chuyện khác. Khi đó chúng ta sử dụng pattern common có tên là `Remote Procedure Call` hay là `RPC`
+
+Để build môt `RPC` system gồm:
+
+- Một client
+- Một scalable RPC server
+
+### Client interface
+
+Trong RPC service chúng ta tạo ra một simple client class, sẽ export một phương thức có tên là `CallAsync` sẽ send một RPC request và block cho đến khi nhận được kết quả từ received.
+
+### Callback queue
+
+RPC sẽ over RabbitMQ một cách dễ dàng. Client send một request message và đợi server replies một response message. Trong khi receive chờ order một response chúng ta cần send một `callback` đến queue address của request.
+
+### CorrelationId
+
+Ở đây có một vấn đề, khi client nhận response từ queue, thì sẽ không biết được send từ request nào. Khi đó chúng ta cần sử dụng một property `CorrelationId` và set giá trị là `unique` cho mỗi lần request. Nếu không biết giá trị của `CorrelationId`, chúng ta sẽ discard message đó vì nó không thuộc bất kỳ request nào.
+
+Tại sao chúng ta lại discard message? Để tránh trường hợp bị duplicate response trong use case: Khi `RPC` server chết sau khi đã processed và reply kết quả cho client nhưng chưa kịp `acknowledgment message` về queue. Khi restart lại server thì `RPC` server sẽ processing lại message trên dẫn đến tình trạng bị duplicate.
+
+### Summary
+
+!["Alt RPC"](../GetStarted/imgs/rpc.png "RPC")
+
+- Khi client start, nó sẽ thực thi và tạo ra một anonymous callback queue
+- Một RPC request, client send một message với 2 propterties:
+  - `ReplyTo`: Set callback queue.
+  - `CorrelationId`: Set giá trị unique cho mỗi request.
+- Request send đến `rpc_queue` queue.
+- RPC server luôn chờ một request từ queue. Khi môt request xuất hiện, nó xử lý logic và send một message để trả kết quả về client khi sử dụng queue property `ReplyTo`
+- Client đợi dữ data từ callback queue. Khi message xuất hiện, nó sẽ check `CorrelationId` property. Nếu matches đúng giá trị với `CorrelationId` của request nó sẽ trả response về application.
+- Callback queue sẽ bị xóa sau khi response.
