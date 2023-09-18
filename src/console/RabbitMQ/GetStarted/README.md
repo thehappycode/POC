@@ -140,3 +140,64 @@ Tại sao chúng ta lại discard message? Để tránh trường hợp bị dup
 - RPC server luôn chờ một request từ queue. Khi môt request xuất hiện, nó xử lý logic và send một message để trả kết quả về client khi sử dụng queue property `ReplyTo`
 - Client đợi dữ data từ callback queue. Khi message xuất hiện, nó sẽ check `CorrelationId` property. Nếu matches đúng giá trị với `CorrelationId` của request nó sẽ trả response về application.
 - Callback queue sẽ bị xóa sau khi response.
+
+## 7. Publisher Confirms
+
+### Enabling Publisher Confirms on a Channel
+
+Publisher confirms là một extension của AMQP 0.9.1 protocal, giá trị mặc định là disabled. Để enabled publish confirms tại channel chúng ta sử dụng phương thức `ConfirmSelect`
+
+```
+var channel = connection.CreateModel();
+channel.ConfirmSelect();
+```
+
+### Strategy #1: Publishing Messages Individually
+
+Chúng ta sẽ bắt đầu với một cách tiếp cận đơn giản bằng việc publishing một message và đợi confirm (synchronously)
+
+```
+while (ThereAreMessagesToPublish())
+{
+    byte[] body = ...;
+    IBasicProperties properties = ...;
+    channel.BasicPublish(exchange, queue, properties, body);
+    // uses a 5 second timeout
+    channel.WaitForConfirmsOrDie(TimeSpan.FromSeconds(5));
+}
+```
+
+Trong ví dụ trên chúng ta publish một message và đợi confirm trong khoảng thời gian là 5 giây. Nếu thành công phương thức sẽ trả ra kết quả là message được confirm, ngược lại nếu không confirms sau 5 giấy sẽ trả ra lỗi timeout hoặc `nack-end` (lỗi broker không bắt được message vì một lý do nào đó) thì phương thức sẽ trả ra một exception.
+
+Với kỹ thuật này chúng ta sẽ có nhược điểm "significantly slow down publising" hay việc confirms message sẽ block tất cả các message phía sau nó do cơ chế đồng bộ (synchronously). Với cách tiếp cận này chúng ta chỉ có thể published hơn 100 message trong một giấy. Nó không đủ tốt cho ứng dụng của chúng ta.
+
+### Strategy #2: Publishing Messages in Batches
+
+Chúng ta sẽ cải tiến ví cách tiếp cận bên trên bằng cách publish một batch messages và đợi confirms.
+
+```
+var batchSize = 100;
+var outstandingMessageCount = 0;
+while (ThereAreMessagesToPublish())
+{
+    byte[] body = ...;
+    IBasicProperties properties = ...;
+    channel.BasicPublish(exchange, queue, properties, body);
+    outstandingMessageCount++;
+    if (outstandingMessageCount == batchSize)
+    {
+        channel.WaitForConfirmsOrDie(TimeSpan.FromSeconds(5));
+        outstandingMessageCount = 0;
+    }
+}
+if (outstandingMessageCount > 0)
+{
+    channel.WaitForConfirmsOrDie(TimeSpan.FromSeconds(5));
+}
+```
+
+Với kỹ thuật này chúng ta sẽ giảm đến (20/100 - 30/100 lần remote đến node của RabbitMQ). Nhưng nó có nhược điểm là sẽ không biết được chính xác message nào bị sai trong trường hợp lỗi, do đó chúng ta nên giữ lại batch message để có thể re-publish messages. Đây cũng là cách giải quyết đồng bộ, bằng cách block publising messages
+
+### Strategy #3: Handling Publisher Confirms Asynchronously
+
+Để giải quyết vấn đề đồng bộ 
