@@ -147,7 +147,7 @@ Tại sao chúng ta lại discard message? Để tránh trường hợp bị dup
 
 Publisher confirms là một extension của AMQP 0.9.1 protocal, giá trị mặc định là disabled. Để enabled publish confirms tại channel chúng ta sử dụng phương thức `ConfirmSelect`
 
-```
+```dotnet
 var channel = connection.CreateModel();
 channel.ConfirmSelect();
 ```
@@ -156,7 +156,7 @@ channel.ConfirmSelect();
 
 Chúng ta sẽ bắt đầu với một cách tiếp cận đơn giản bằng việc publishing một message và đợi confirm (synchronously)
 
-```
+```dotnet
 while (ThereAreMessagesToPublish())
 {
     byte[] body = ...;
@@ -175,7 +175,7 @@ Với kỹ thuật này chúng ta sẽ có nhược điểm "significantly slow 
 
 Chúng ta sẽ cải tiến ví cách tiếp cận bên trên bằng cách publish một batch messages và đợi confirms.
 
-```
+```dotnet
 var batchSize = 100;
 var outstandingMessageCount = 0;
 while (ThereAreMessagesToPublish())
@@ -200,4 +200,79 @@ Với kỹ thuật này chúng ta sẽ giảm đến (20/100 - 30/100 lần remo
 
 ### Strategy #3: Handling Publisher Confirms Asynchronously
 
-Để giải quyết vấn đề đồng bộ 
+Để giải quyết vấn đề published message asynchoronously, chúng ta cần đăng ký một callback ở client
+
+```dotnet
+var channel = connection.CreateModel();
+channel.ConfirmSelect();
+channel.BasicAcks += (sender, ea) =>
+{
+  // code when message is confirmed
+};
+channel.BasicNacks += (sender, ea) =>
+{
+  //code when message is nack-ed
+};
+```
+
+Đoạn code bên trên chúng ta có hai callback:
+
+- Môt là confirmed message
+- Một là nack-end massage
+
+Cả hai callback đều có **correcsponse** `EventArgs` với parameter là `ea` chứa:
+
+- *delivery tag*: Đây là số sequence được định nghĩa trong confirmed hoặc nack-ed message.
+- *multiple*: Có kiểu giá trị là boolean.
+
+  - `false` nếu chỉ có một message được confirmed/nack-end
+  - `true` nếu tất cả các message có giá trị **nhỏ hơn hoặc bằng** số sequence của confirmed/nack-ed
+
+Số sequence chúng ta có thể lấy với `NextPublishSeqNo`
+
+```dotnet
+var sequenceNumber = channel.NextPublishSeqNo;
+channel.BasicPublish(exchange, queue, properties, body);
+```
+
+Để chứa Correlate messages với số sequence chúng ta sẽ dụng một `dictionary`.
+
+```dotnet
+var outstandingConfirms = new ConcurrentDictionary<ulong, string>();
+// ... code for confirm callbacks will come later
+var body = "...";
+outstandingConfirms.TryAdd(channel.NextPublishSeqNo, body);
+channel.BasicPublish(exchange, queue, properties, Encoding.UTF8.GetBytes(body));
+```
+
+Bây giờ khi publishing code đã tracks outbound messages với một `dictionary`. Chúng ta có thể sữ dụng dictionary khi nhận confirm, ghi log warning khi message bị nack-ed.
+
+```dotnet
+var outstandingConfirms = new ConcurrentDictionary<ulong, string>();
+
+void CleanOutstandingConfirms(ulong sequenceNumber, bool multiple)
+{
+    if (multiple)
+    {
+        var confirmed = outstandingConfirms.Where(k => k.Key <= sequenceNumber);
+        foreach (var entry in confirmed)
+        {
+            outstandingConfirms.TryRemove(entry.Key, out _);
+        }
+    }
+    else
+    {
+        outstandingConfirms.TryRemove(sequenceNumber, out _);
+    }
+}
+
+channel.BasicAcks += (sender, ea) => CleanOutstandingConfirms(ea.DeliveryTag, ea.Multiple);
+channel.BasicNacks += (sender, ea) =>
+{
+    outstandingConfirms.TryGetValue(ea.DeliveryTag, out string body);
+    Console.WriteLine($"Message with body {body} has been nack-ed. Sequence number: {ea.DeliveryTag}, multiple: {ea.Multiple}");
+    CleanOutstandingConfirms(ea.DeliveryTag, ea.Multiple);
+};
+
+// ... publishing code
+```
