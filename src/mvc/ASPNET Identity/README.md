@@ -2,9 +2,44 @@
 
 ## CLI
 
+### Tạo project
+
 ```dotnet
 $ dotnet new [mvc, webapi,..] -n <name> --auth Individual
 ```
+
+### Scaffold
+
+#### [Install code generator](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/scaffold-identity?view=aspnetcore-7.0&tabs=netcore-cli "Link tham khảo")
+
+
+```dotnet
+$ dotnet tool install -g dotnet-aspnet-codegenerator
+```
+
+#### Reference package Microsoft.VisualStudio.Web.CodeGeneration.Design vào project
+
+```dotnet 
+$ dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
+```
+
+#### Command xem danh sách options
+
+```dotnet
+$ dotnet aspnet-codegenerator identity -h
+```
+
+#### Command add allFiles
+
+```dotnet
+$ dotnet aspnet-codegenerator identity --files="Account.AccessDenied;Account.ConfirmEmail;Account.ExternalLogin;Account.ForgotPassword;Account.ForgotPasswordConfirmation;Account.Lockout;Account.Login;Account.LoginWith2fa;Account.LoginWithRecoveryCode;Account.Logout;Account.Manage._Layout;Account.Manage._ManageNav;Account.Manage._StatusMessage;Account.Manage.ChangePassword;Account.Manage.DeletePersonalData;Account.Manage.Disable2fa;Account.Manage.DownloadPersonalData;Account.Manage.EnableAuthenticator;Account.Manage.ExternalLogins;Account.Manage.GenerateRecoveryCodes;Account.Manage.Index;Account.Manage.PersonalData;Account.Manage.ResetAuthenticator;Account.Manage.SetPassword;Account.Manage.TwoFactorAuthentication;Account.Register;Account.ResetPassword;Account.ResetPasswordConfirmation"
+```
+#### Command add allFiles options -dbProvicer
+
+```dotnet
+% dotnet aspnet-codegenerator identity --files="Account.AccessDenied;Account.ConfirmEmail;Account.ExternalLogin;Account.ForgotPassword;Account.ForgotPasswordConfirmation;Account.Lockout;Account.Login;Account.LoginWith2fa;Account.LoginWithRecoveryCode;Account.Logout;Account.Manage._Layout;Account.Manage._ManageNav;Account.Manage._StatusMessage;Account.Manage.ChangePassword;Account.Manage.DeletePersonalData;Account.Manage.Disable2fa;Account.Manage.DownloadPersonalData;Account.Manage.EnableAuthenticator;Account.Manage.ExternalLogins;Account.Manage.GenerateRecoveryCodes;Account.Manage.Index;Account.Manage.PersonalData;Account.Manage.ResetAuthenticator;Account.Manage.SetPassword;Account.Manage.TwoFactorAuthentication;Account.Register;Account.ResetPassword;Account.ResetPasswordConfirmation" --force -dbProvider 'sqlite'
+```
+
 
 ## Getting Started with ASP.NET Identity
 
@@ -104,3 +139,7 @@ ASP.NET đã phát triển với các mục đích sau:
     - ASP.NET Identity is redistributed trên các NuGet package được installed in ASP.NET MVC, Web Forms và Web API templates. Bạn có thể download NuGet package từ NuGet gallery.
 
     - Releasing ASP.NET Identity về new feature và bug fixes từ NuGet package sẽ giúp các developers update dễ dàng hơn.
+
+### Components of ASP.NET Identity
+
+![Components of ASP.NET Identity](./images/components-of-aspnet-identity.png)
