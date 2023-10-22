@@ -1,0 +1,10 @@
+2023-10-22 09:04:41.990 +07:00 [INF] Hello world!
+2023-10-22 09:04:42.037 +07:00 [DBG] Dividing 10 by 0
+2023-10-22 09:04:42.041 +07:00 [ERR] Something went wrong
+System.DivideByZeroException: Attempted to divide by zero.
+   at Program.<Main>$(String[] args) in /Users/thehappycode/Documents/Programing/POC/src/console/Serilog/GettingStarted/Program.cs:line 16
+2023-10-22 09:06:19.497 +07:00 [INF] Hello world!
+2023-10-22 09:06:19.544 +07:00 [DBG] Dividing 10 by 0
+2023-10-22 09:06:19.549 +07:00 [ERR] Something went wrong
+System.DivideByZeroException: Attempted to divide by zero.
+   at Program.<Main>$(String[] args) in /Users/thehappycode/Documents/Programing/POC/src/console/Serilog/GettingStarted/Program.cs:line 16
