@@ -84,3 +84,51 @@ Text-based sinks sử dụng *output templates* có dạng:
 - **{Message:lj}**: Format dữ liệu được embedded vào trong message được output ra có dạng `JSON(j)` và mong muốn `string` literals(l)
 
 ### Minimun level
+
+`MininumLevel` cung cấp cấu hình cho một log event levels và nó chính xác là events minium, khi đó những log event levels thấp hơn sẽ không được xử lý. Mặc định sẽ là `Information` level events.
+
+### Overriding per sink
+
+Đôi khi bạn muốn ghi detailed logs là trung bình, nhưng sẽ ít hơn detailed logs khác.
+
+```dotnet
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.File("log.txt")
+    .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Information)
+    .CreateLogger();
+```
+
+Ví dụ trên sẽ ghi log `Debug` vào trong rolling file, và log `Information` và level cao hơn vào trong console.
+
+### Enrichers
+
+Enrichers đơn giản là những components add, remove or modifier các properties được attached đến log event. Nó có thể được sẻ dụng với mục đích attaching một thread id với mỗi event như ví dụ sau:
+
+```dotnet
+class ThreadIdEnricher : ILogEventEnricher
+{
+    public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
+    {
+        logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty(
+                "ThreadId", Thread.CurrentThread.ManagedThreadId));
+    }
+}
+```
+
+Thêm cấu hình Enrichers vào configuration object.
+
+```dotnet
+Log.Logger = new LoggerConfiguration()
+    .Enrich.With(new ThreadIdEnricher())
+    .Enrich.WithProperty("Version", "1.0.0") // add properties
+    .WriteTo.Console(
+        outputTemplate: "{Timestamp:HH:mm} [{Level}] ({ThreadId}) {Version} {Message}{NewLine}{Exception}")
+    .CreateLogger();
+```
+
+
+### Filters
+
+
+### Sub-loggers
