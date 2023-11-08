@@ -1,6 +1,8 @@
+using Common.Constants;
 using Common.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Serilog;
 
 namespace Source.Controllers;
 
@@ -28,8 +30,9 @@ public class WeatherForecastController : ControllerBase
     [HttpGet(Name = "GetWeatherForecast")]
     public async Task<IEnumerable<WeatherForecast>> Get()
     {
-        var correlationId = HttpContext.Response.Headers["X-Correlation-Id"];
-        Console.WriteLine($"X-Correlation-Id = {correlationId}");
+        Log.Information("Source/GetWeatherForecast");
+        var correlationId = HttpContext.Request.Headers[CorrelationIdConstant.X_CORRELATION_ID_HEADER];
+        Log.Information($"X-Correlation-Id = {correlationId}");
 
         try
         {

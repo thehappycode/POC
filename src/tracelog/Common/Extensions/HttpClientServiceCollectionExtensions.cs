@@ -1,3 +1,4 @@
+using Common.Handlers;
 using Common.Helpers;
 using Common.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,12 +9,13 @@ public static class HttpClientServiceCollectionExtensions
 {
     public static IServiceCollection AddHttpClientService(this IServiceCollection services)
     {
-        services.AddHttpClient<HttpClientDentinationService>();
+        services.AddTransient<RequestHandler>();
+        services.AddHttpClient<HttpClientDentinationService>()
+            .AddHttpMessageHandler<RequestHandler>();
 
         // services.AddHttpClient<HttpClientDentinationService>(httpClient => { // Change uri
         //     httpClient.BaseAddress = new Uri("")
         // });
-
         return services;
     }
 }

@@ -1,5 +1,7 @@
+using Common.Constants;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Serilog;
 
 namespace Dentination.Controllers;
 
@@ -22,8 +24,9 @@ public class WeatherForecastController : ControllerBase
     [HttpGet(Name = "GetWeatherForecast")]
     public IEnumerable<WeatherForecast> Get()
     {
-        var correlationId = HttpContext.Response.Headers["X-Correlation-Id"];
-        Console.WriteLine($"X-Correlation-Id = {correlationId}");
+        Log.Information("Dentination/GetWeatherForecast");
+        var correlationId = HttpContext.Request.Headers[CorrelationIdConstant.X_CORRELATION_ID_HEADER];
+        Log.Information($"X-Correlation-Id = {correlationId}");
 
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast
         {

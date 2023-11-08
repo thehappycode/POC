@@ -1,0 +1,132 @@
+2023-11-07 23:41:22.656 +07:00 [INF]  Now listening on: http://localhost:5298
+2023-11-07 23:41:22.696 +07:00 [INF]  Application started. Press Ctrl+C to shut down.
+2023-11-07 23:41:22.696 +07:00 [INF]  Hosting environment: Development
+2023-11-07 23:41:22.696 +07:00 [INF]  Content root path: /Users/thehappycode/Documents/Programing/POC/src/tracelog/Source
+2023-11-07 23:41:26.972 +07:00 [INF]  Now listening on: http://localhost:5263
+2023-11-07 23:41:27.011 +07:00 [INF]  Application started. Press Ctrl+C to shut down.
+2023-11-07 23:41:27.012 +07:00 [INF]  Hosting environment: Development
+2023-11-07 23:41:27.012 +07:00 [INF]  Content root path: /Users/thehappycode/Documents/Programing/POC/src/tracelog/Dentination
+2023-11-07 23:41:29.190 +07:00 [INF] 911ec3e5-47d9-439d-862c-0d7e3cdb6830 Request starting HTTP/1.1 GET http://localhost:5298/WeatherForecast - -
+2023-11-07 23:41:29.212 +07:00 [WRN] 911ec3e5-47d9-439d-862c-0d7e3cdb6830 Failed to determine the https port for redirect.
+2023-11-07 23:41:29.216 +07:00 [INF] 037baf7f-b045-42a5-ad00-db3ab2eaea4f Executing endpoint 'Source.Controllers.WeatherForecastController.Get (Source)'
+2023-11-07 23:41:29.227 +07:00 [INF] 037baf7f-b045-42a5-ad00-db3ab2eaea4f Route matched with {action = "Get", controller = "WeatherForecast"}. Executing controller action with signature System.Threading.Tasks.Task`1[System.Collections.Generic.IEnumerable`1[Source.WeatherForecast]] Get() on controller Source.Controllers.WeatherForecastController (Source).
+2023-11-07 23:41:29.235 +07:00 [INF] 037baf7f-b045-42a5-ad00-db3ab2eaea4f Source/GetWeatherForecast
+2023-11-07 23:41:29.235 +07:00 [INF] 037baf7f-b045-42a5-ad00-db3ab2eaea4f X-Correlation-Id = 037baf7f-b045-42a5-ad00-db3ab2eaea4f
+2023-11-07 23:41:29.239 +07:00 [INF] 037baf7f-b045-42a5-ad00-db3ab2eaea4f Start processing HTTP request GET http://localhost:5263/WeatherForecast
+2023-11-07 23:41:29.239 +07:00 [INF] 037baf7f-b045-42a5-ad00-db3ab2eaea4f Sending HTTP request GET http://localhost:5263/WeatherForecast
+2023-11-07 23:41:29.282 +07:00 [INF]  Request starting HTTP/1.1 GET http://localhost:5263/WeatherForecast - -
+2023-11-07 23:41:29.302 +07:00 [WRN]  Failed to determine the https port for redirect.
+2023-11-07 23:41:29.306 +07:00 [INF]  Executing endpoint 'Dentination.Controllers.WeatherForecastController.Get (Dentination)'
+2023-11-07 23:41:29.311 +07:00 [INF]  Route matched with {action = "Get", controller = "WeatherForecast"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[Dentination.WeatherForecast] Get() on controller Dentination.Controllers.WeatherForecastController (Dentination).
+2023-11-07 23:41:29.313 +07:00 [INF]  Dentination/GetWeatherForecast
+2023-11-07 23:41:29.313 +07:00 [INF]  X-Correlation-Id = 037baf7f-b045-42a5-ad00-db3ab2eaea4f
+2023-11-07 23:41:29.316 +07:00 [INF]  Executing ObjectResult, writing value of type 'Dentination.WeatherForecast[]'.
+2023-11-07 23:41:29.345 +07:00 [INF]  Executed action Dentination.Controllers.WeatherForecastController.Get (Dentination) in 31.2164ms
+2023-11-07 23:41:29.346 +07:00 [INF]  Executed endpoint 'Dentination.Controllers.WeatherForecastController.Get (Dentination)'
+2023-11-07 23:41:29.347 +07:00 [INF]  HTTP GET /WeatherForecast responded 200 in 41.8451 ms
+2023-11-07 23:41:29.347 +07:00 [INF] 037baf7f-b045-42a5-ad00-db3ab2eaea4f Received HTTP response headers after 106.1659ms - 200
+n/json;+charset=utf-8 67.4554ms
+2023-11-07 23:41:29.349 +07:00 [INF] 037baf7f-b045-42a5-ad00-db3ab2eaea4f End processing HTTP request after 111.9324ms - 200
+2023-11-07 23:41:29.383 +07:00 [INF] 037baf7f-b045-42a5-ad00-db3ab2eaea4f Executing ObjectResult, writing value of type 'Source.WeatherForecast[]'.
+2023-11-07 23:41:29.409 +07:00 [INF] 037baf7f-b045-42a5-ad00-db3ab2eaea4f Executed action Source.Controllers.WeatherForecastController.Get (Source) in 180.0722ms
+2023-11-07 23:41:29.409 +07:00 [INF] 037baf7f-b045-42a5-ad00-db3ab2eaea4f Executed endpoint 'Source.Controllers.WeatherForecastController.Get (Source)'
+2023-11-07 23:41:29.410 +07:00 [INF] 037baf7f-b045-42a5-ad00-db3ab2eaea4f HTTP GET /WeatherForecast responded 200 in 194.4970 ms
+2023-11-07 23:41:29.412 +07:00 [INF] 037baf7f-b045-42a5-ad00-db3ab2eaea4f Request finished HTTP/1.1 GET http://localhost:5298/WeatherForecast - - - 200 - application/json;+charset=utf-8 223.6145ms
+2023-11-07 23:42:18.227 +07:00 [INF] bfb44661-c4c5-4990-b1d7-be653dd95676 Request starting HTTP/1.1 GET http://localhost:5298/WeatherForecast - -
+2023-11-07 23:42:18.229 +07:00 [INF] 602057dd-e262-4d4a-b7d3-0ace2d9a5677 Executing endpoint 'Source.Controllers.WeatherForecastController.Get (Source)'
+2023-11-07 23:42:18.230 +07:00 [INF] 602057dd-e262-4d4a-b7d3-0ace2d9a5677 Route matched with {action = "Get", controller = "WeatherForecast"}. Executing controller action with signature System.Threading.Tasks.Task`1[System.Collections.Generic.IEnumerable`1[Source.WeatherForecast]] Get() on controller Source.Controllers.WeatherForecastController (Source).
+2023-11-07 23:42:18.230 +07:00 [INF] 602057dd-e262-4d4a-b7d3-0ace2d9a5677 Source/GetWeatherForecast
+2023-11-07 23:42:18.231 +07:00 [INF] 602057dd-e262-4d4a-b7d3-0ace2d9a5677 X-Correlation-Id = 602057dd-e262-4d4a-b7d3-0ace2d9a5677
+2023-11-07 23:42:18.231 +07:00 [INF] 602057dd-e262-4d4a-b7d3-0ace2d9a5677 Start processing HTTP request GET http://localhost:5263/WeatherForecast
+2023-11-07 23:42:18.232 +07:00 [INF] 602057dd-e262-4d4a-b7d3-0ace2d9a5677 Sending HTTP request GET http://localhost:5263/WeatherForecast
+2023-11-07 23:42:18.236 +07:00 [INF]  Request starting HTTP/1.1 GET http://localhost:5263/WeatherForecast - -
+2023-11-07 23:42:18.238 +07:00 [INF]  Executing endpoint 'Dentination.Controllers.WeatherForecastController.Get (Dentination)'
+2023-11-07 23:42:18.238 +07:00 [INF]  Route matched with {action = "Get", controller = "WeatherForecast"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[Dentination.WeatherForecast] Get() on controller Dentination.Controllers.WeatherForecastController (Dentination).
+2023-11-07 23:42:18.238 +07:00 [INF]  Dentination/GetWeatherForecast
+2023-11-07 23:42:18.238 +07:00 [INF]  X-Correlation-Id = 037baf7f-b045-42a5-ad00-db3ab2eaea4f
+2023-11-07 23:42:18.239 +07:00 [INF]  Executing ObjectResult, writing value of type 'Dentination.WeatherForecast[]'.
+2023-11-07 23:42:18.239 +07:00 [INF]  Executed action Dentination.Controllers.WeatherForecastController.Get (Dentination) in 1.2402ms
+2023-11-07 23:42:18.239 +07:00 [INF]  Executed endpoint 'Dentination.Controllers.WeatherForecastController.Get (Dentination)'
+2023-11-07 23:42:18.240 +07:00 [INF]  HTTP GET /WeatherForecast responded 200 in 2.0434 ms
+2023-11-07 23:42:18.240 +07:00 [INF]  Request finished HTTP/1.1 GET http://localhost:5263/WeatherForecast - - - 200 - application/json;+charset=utf-8 4.1685ms
+2023-11-07 23:42:18.240 +07:00 [INF] 602057dd-e262-4d4a-b7d3-0ace2d9a5677 Received HTTP response headers after 8.2587ms - 200
+2023-11-07 23:42:18.240 +07:00 [INF] 602057dd-e262-4d4a-b7d3-0ace2d9a5677 End processing HTTP request after 9.1675ms - 200
+2023-11-07 23:42:18.241 +07:00 [INF] 602057dd-e262-4d4a-b7d3-0ace2d9a5677 Executing ObjectResult, writing value of type 'Source.WeatherForecast[]'.
+2023-11-07 23:42:18.242 +07:00 [INF] 602057dd-e262-4d4a-b7d3-0ace2d9a5677 Executed action Source.Controllers.WeatherForecastController.Get (Source) in 11.7122ms
+2023-11-07 23:42:18.242 +07:00 [INF] 602057dd-e262-4d4a-b7d3-0ace2d9a5677 Executed endpoint 'Source.Controllers.WeatherForecastController.Get (Source)'
+2023-11-07 23:42:18.242 +07:00 [INF] 602057dd-e262-4d4a-b7d3-0ace2d9a5677 HTTP GET /WeatherForecast responded 200 in 12.9538 ms
+2023-11-07 23:42:18.242 +07:00 [INF] 602057dd-e262-4d4a-b7d3-0ace2d9a5677 Request finished HTTP/1.1 GET http://localhost:5298/WeatherForecast - - - 200 - application/json;+charset=utf-8 15.1519ms
+2023-11-07 23:44:42.335 +07:00 [INF]  Application is shutting down...
+2023-11-07 23:44:43.697 +07:00 [INF]  Application is shutting down...
+2023-11-07 23:44:47.906 +07:00 [INF] [] Microsoft.Hosting.Lifetime. Now listening on: http://localhost:5298
+2023-11-07 23:44:47.950 +07:00 [INF] [] Microsoft.Hosting.Lifetime. Application started. Press Ctrl+C to shut down.
+2023-11-07 23:44:47.950 +07:00 [INF] [] Microsoft.Hosting.Lifetime. Hosting environment: Development
+2023-11-07 23:44:47.950 +07:00 [INF] [] Microsoft.Hosting.Lifetime. Content root path: /Users/thehappycode/Documents/Programing/POC/src/tracelog/Source
+2023-11-07 23:44:51.453 +07:00 [INF] [] Microsoft.Hosting.Lifetime. Now listening on: http://localhost:5263
+2023-11-07 23:44:51.493 +07:00 [INF] [] Microsoft.Hosting.Lifetime. Application started. Press Ctrl+C to shut down.
+2023-11-07 23:44:51.493 +07:00 [INF] [] Microsoft.Hosting.Lifetime. Hosting environment: Development
+2023-11-07 23:44:51.493 +07:00 [INF] [] Microsoft.Hosting.Lifetime. Content root path: /Users/thehappycode/Documents/Programing/POC/src/tracelog/Dentination
+2023-11-07 23:44:55.226 +07:00 [INF] [f507f432-0519-4c0b-a644-17045611141e] Microsoft.AspNetCore.Hosting.Diagnostics.GET Request starting HTTP/1.1 GET http://localhost:5298/WeatherForecast - -
+2023-11-07 23:44:55.248 +07:00 [WRN] [f507f432-0519-4c0b-a644-17045611141e] Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware. Failed to determine the https port for redirect.
+2023-11-07 23:44:55.253 +07:00 [INF] [a2f4a7a4-9667-451f-991b-c7908ce3947a] Microsoft.AspNetCore.Routing.EndpointMiddleware. Executing endpoint 'Source.Controllers.WeatherForecastController.Get (Source)'
+2023-11-07 23:44:55.263 +07:00 [INF] [a2f4a7a4-9667-451f-991b-c7908ce3947a] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker. Route matched with {action = "Get", controller = "WeatherForecast"}. Executing controller action with signature System.Threading.Tasks.Task`1[System.Collections.Generic.IEnumerable`1[Source.WeatherForecast]] Get() on controller Source.Controllers.WeatherForecastController (Source).
+2023-11-07 23:44:55.271 +07:00 [INF] [a2f4a7a4-9667-451f-991b-c7908ce3947a] . Source/GetWeatherForecast
+2023-11-07 23:44:55.272 +07:00 [INF] [a2f4a7a4-9667-451f-991b-c7908ce3947a] . X-Correlation-Id = a2f4a7a4-9667-451f-991b-c7908ce3947a
+2023-11-07 23:44:55.275 +07:00 [INF] [a2f4a7a4-9667-451f-991b-c7908ce3947a] System.Net.Http.HttpClient.HttpClientDentinationService.LogicalHandler. Start processing HTTP request GET http://localhost:5263/WeatherForecast
+2023-11-07 23:44:55.276 +07:00 [INF] [a2f4a7a4-9667-451f-991b-c7908ce3947a] System.Net.Http.HttpClient.HttpClientDentinationService.ClientHandler. Sending HTTP request GET http://localhost:5263/WeatherForecast
+2023-11-07 23:44:55.323 +07:00 [INF] [] Microsoft.AspNetCore.Hosting.Diagnostics.GET Request starting HTTP/1.1 GET http://localhost:5263/WeatherForecast - -
+2023-11-07 23:44:55.346 +07:00 [WRN] [] Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware. Failed to determine the https port for redirect.
+2023-11-07 23:44:55.349 +07:00 [INF] [] Microsoft.AspNetCore.Routing.EndpointMiddleware. Executing endpoint 'Dentination.Controllers.WeatherForecastController.Get (Dentination)'
+2023-11-07 23:44:55.356 +07:00 [INF] [] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker. Route matched with {action = "Get", controller = "WeatherForecast"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[Dentination.WeatherForecast] Get() on controller Dentination.Controllers.WeatherForecastController (Dentination).
+2023-11-07 23:44:55.357 +07:00 [INF] [] . Dentination/GetWeatherForecast
+2023-11-07 23:44:55.358 +07:00 [INF] [] . X-Correlation-Id = a2f4a7a4-9667-451f-991b-c7908ce3947a
+2023-11-07 23:44:55.361 +07:00 [INF] [] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor. Executing ObjectResult, writing value of type 'Dentination.WeatherForecast[]'.
+2023-11-07 23:44:55.390 +07:00 [INF] [] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker. Executed action Dentination.Controllers.WeatherForecastController.Get (Dentination) in 32.5338ms
+2023-11-07 23:44:55.392 +07:00 [INF] [] Microsoft.AspNetCore.Routing.EndpointMiddleware. Executed endpoint 'Dentination.Controllers.WeatherForecastController.Get (Dentination)'
+2023-11-07 23:44:55.393 +07:00 [INF] [] Serilog.AspNetCore.RequestLoggingMiddleware. HTTP GET /WeatherForecast responded 200 in 43.8637 ms
+2023-11-07 23:44:55.394 +07:00 [INF] [] Microsoft.AspNetCore.Hosting.Diagnostics.GET Request finished HTTP/1.1 GET http://localhost:5263/WeatherForecast - - - 200 - application/json;+charset=utf-8 72.9068ms
+2023-11-07 23:44:55.393 +07:00 [INF] [a2f4a7a4-9667-451f-991b-c7908ce3947a] System.Net.Http.HttpClient.HttpClientDentinationService.ClientHandler. Received HTTP response headers after 115.6825ms - 200
+2023-11-07 23:44:55.395 +07:00 [INF] [a2f4a7a4-9667-451f-991b-c7908ce3947a] System.Net.Http.HttpClient.HttpClientDentinationService.LogicalHandler. End processing HTTP request after 121.3484ms - 200
+2023-11-07 23:44:55.430 +07:00 [INF] [a2f4a7a4-9667-451f-991b-c7908ce3947a] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor. Executing ObjectResult, writing value of type 'Source.WeatherForecast[]'.
+2023-11-07 23:44:55.457 +07:00 [INF] [a2f4a7a4-9667-451f-991b-c7908ce3947a] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker. Executed action Source.Controllers.WeatherForecastController.Get (Source) in 192.3587ms
+2023-11-07 23:44:55.458 +07:00 [INF] [a2f4a7a4-9667-451f-991b-c7908ce3947a] Microsoft.AspNetCore.Routing.EndpointMiddleware. Executed endpoint 'Source.Controllers.WeatherForecastController.Get (Source)'
+2023-11-07 23:44:55.459 +07:00 [INF] [a2f4a7a4-9667-451f-991b-c7908ce3947a] Serilog.AspNetCore.RequestLoggingMiddleware. HTTP GET /WeatherForecast responded 200 in 206.8400 ms
+2023-11-07 23:44:55.461 +07:00 [INF] [a2f4a7a4-9667-451f-991b-c7908ce3947a] Microsoft.AspNetCore.Hosting.Diagnostics.GET Request finished HTTP/1.1 GET http://localhost:5298/WeatherForecast - - - 200 - application/json;+charset=utf-8 236.4463ms
+2023-11-07 23:46:10.951 +07:00 [INF] [] Microsoft.Hosting.Lifetime. Application is shutting down...
+2023-11-07 23:46:12.176 +07:00 [INF] [] Microsoft.Hosting.Lifetime. Application is shutting down...
+2023-11-07 23:46:17.132 +07:00 [INF] [] Now listening on: http://localhost:5298
+2023-11-07 23:46:17.172 +07:00 [INF] [] Application started. Press Ctrl+C to shut down.
+2023-11-07 23:46:17.172 +07:00 [INF] [] Hosting environment: Development
+2023-11-07 23:46:17.172 +07:00 [INF] [] Content root path: /Users/thehappycode/Documents/Programing/POC/src/tracelog/Source
+2023-11-07 23:46:19.466 +07:00 [INF] [] Now listening on: http://localhost:5263
+2023-11-07 23:46:19.507 +07:00 [INF] [] Application started. Press Ctrl+C to shut down.
+2023-11-07 23:46:19.508 +07:00 [INF] [] Hosting environment: Development
+2023-11-07 23:46:19.508 +07:00 [INF] [] Content root path: /Users/thehappycode/Documents/Programing/POC/src/tracelog/Dentination
+2023-11-07 23:46:20.514 +07:00 [INF] [7a50fd15-854b-423d-9807-5613a6d8b534] Request starting HTTP/1.1 GET http://localhost:5298/WeatherForecast - -
+2023-11-07 23:46:20.540 +07:00 [WRN] [7a50fd15-854b-423d-9807-5613a6d8b534] Failed to determine the https port for redirect.
+2023-11-07 23:46:20.544 +07:00 [INF] [d02e16d4-24fb-40ca-8f1c-91c170195b77] Executing endpoint 'Source.Controllers.WeatherForecastController.Get (Source)'
+2023-11-07 23:46:20.554 +07:00 [INF] [d02e16d4-24fb-40ca-8f1c-91c170195b77] Route matched with {action = "Get", controller = "WeatherForecast"}. Executing controller action with signature System.Threading.Tasks.Task`1[System.Collections.Generic.IEnumerable`1[Source.WeatherForecast]] Get() on controller Source.Controllers.WeatherForecastController (Source).
+2023-11-07 23:46:20.562 +07:00 [INF] [d02e16d4-24fb-40ca-8f1c-91c170195b77] Source/GetWeatherForecast
+2023-11-07 23:46:20.563 +07:00 [INF] [d02e16d4-24fb-40ca-8f1c-91c170195b77] X-Correlation-Id = d02e16d4-24fb-40ca-8f1c-91c170195b77
+2023-11-07 23:46:20.566 +07:00 [INF] [d02e16d4-24fb-40ca-8f1c-91c170195b77] Start processing HTTP request GET http://localhost:5263/WeatherForecast
+2023-11-07 23:46:20.566 +07:00 [INF] [d02e16d4-24fb-40ca-8f1c-91c170195b77] Sending HTTP request GET http://localhost:5263/WeatherForecast
+2023-11-07 23:46:20.614 +07:00 [INF] [] Request starting HTTP/1.1 GET http://localhost:5263/WeatherForecast - -
+2023-11-07 23:46:20.638 +07:00 [WRN] [] Failed to determine the https port for redirect.
+2023-11-07 23:46:20.643 +07:00 [INF] [] Executing endpoint 'Dentination.Controllers.WeatherForecastController.Get (Dentination)'
+2023-11-07 23:46:20.648 +07:00 [INF] [] Route matched with {action = "Get", controller = "WeatherForecast"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[Dentination.WeatherForecast] Get() on controller Dentination.Controllers.WeatherForecastController (Dentination).
+2023-11-07 23:46:20.650 +07:00 [INF] [] Dentination/GetWeatherForecast
+2023-11-07 23:46:20.651 +07:00 [INF] [] X-Correlation-Id = d02e16d4-24fb-40ca-8f1c-91c170195b77
+2023-11-07 23:46:20.654 +07:00 [INF] [] Executing ObjectResult, writing value of type 'Dentination.WeatherForecast[]'.
+2023-11-07 23:46:20.681 +07:00 [INF] [] Executed action Dentination.Controllers.WeatherForecastController.Get (Dentination) in 30.7665ms
+2023-11-07 23:46:20.683 +07:00 [INF] [] Executed endpoint 'Dentination.Controllers.WeatherForecastController.Get (Dentination)'
+2023-11-07 23:46:20.684 +07:00 [INF] [] HTTP GET /WeatherForecast responded 200 in 41.7405 ms
+2023-11-07 23:46:20.684 +07:00 [INF] [d02e16d4-24fb-40ca-8f1c-91c170195b77] Received HTTP response headers after 115.4746ms - 200
+n/json;+charset=utf-8 72.3473ms
+2023-11-07 23:46:20.686 +07:00 [INF] [d02e16d4-24fb-40ca-8f1c-91c170195b77] End processing HTTP request after 121.3757ms - 200
+2023-11-07 23:46:20.721 +07:00 [INF] [d02e16d4-24fb-40ca-8f1c-91c170195b77] Executing ObjectResult, writing value of type 'Source.WeatherForecast[]'.
+2023-11-07 23:46:20.746 +07:00 [INF] [d02e16d4-24fb-40ca-8f1c-91c170195b77] Executed action Source.Controllers.WeatherForecastController.Get (Source) in 189.8867ms
+2023-11-07 23:46:20.747 +07:00 [INF] [d02e16d4-24fb-40ca-8f1c-91c170195b77] Executed endpoint 'Source.Controllers.WeatherForecastController.Get (Source)'
+2023-11-07 23:46:20.748 +07:00 [INF] [d02e16d4-24fb-40ca-8f1c-91c170195b77] HTTP GET /WeatherForecast responded 200 in 204.0007 ms
+2023-11-07 23:46:20.750 +07:00 [INF] [d02e16d4-24fb-40ca-8f1c-91c170195b77] Request finished HTTP/1.1 GET http://localhost:5298/WeatherForecast - - - 200 - application/json;+charset=utf-8 237.5710ms
+2023-11-07 23:46:36.856 +07:00 [INF] [] Application is shutting down...
+2023-11-07 23:46:38.371 +07:00 [INF] [] Application is shutting down...

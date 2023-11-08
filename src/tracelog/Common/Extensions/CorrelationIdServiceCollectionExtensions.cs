@@ -9,7 +9,7 @@ public static class CorrelationIdServiceCollectionExtensions
 {
     public static IServiceCollection AddCorrelationIdService(this IServiceCollection services)
     {
-        services.AddScoped<ICorrelationIdBase, CorrelationIdBase>();
+        services.AddTransient<ICorrelationIdBase, CorrelationIdBase>();
         services.AddTransient<CorrelationIdMiddleware>();
 
         return services;
