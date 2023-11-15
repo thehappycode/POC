@@ -1,12 +1,21 @@
 using Common.Constants;
 using Common.Extensions;
+using Common.Filters;
 using Common.Helpers;
+using Common.Options;
+using MassTransit;
+using Newtonsoft.Json;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+ 
 builder.Services.AddCorrelationIdService();
 
 builder.Services.AddHttpClientService();
@@ -28,10 +37,31 @@ builder.Host.UseSerilog((context, configuration) =>
         .ReadFrom.Configuration(context.Configuration);
 });
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddScoped(typeof(PublishFilter<>));
+
+var rabbitMqOptions = builder.Configuration
+    .GetSection(nameof(RabbitMqOptions))
+    .Get<RabbitMqOptions>();
+// Log.Information($"RabbitMqOptions: {JsonConvert.SerializeObject(rabbitMqOptions)}");
+Console.WriteLine($"RabbitMqOptions: {JsonConvert.SerializeObject(rabbitMqOptions)}");
+builder.Services.AddMassTransit(configure =>
+{
+    configure.UsingRabbitMq((ctx, cfg) =>
+    {
+        cfg.Host(
+            rabbitMqOptions?.Host,
+            rabbitMqOptions?.VirtualHost,
+            c =>
+            {
+                c.Username(rabbitMqOptions?.Username);
+                c.Password(rabbitMqOptions?.Password);
+            });
+
+        cfg.UsePublishFilter(typeof(PublishFilter<>), ctx);
+    });
+});
+
+builder.Services.AddMassTransitHostedService();
 
 var app = builder.Build();
 
@@ -51,6 +81,5 @@ app.UseCorrelationId();
 app.UseSerilogRequestLogging();
 
 app.MapControllers();
-
 
 app.Run();

@@ -1,0 +1,109 @@
+2023-11-11 09:36:51.935 +07:00 [INF] [7bc704cb-9d57-41d0-819d-d6db0b95fae2] Request starting HTTP/1.1 POST http://localhost:5298/api/Order/CreateOrder application/json 67
+2023-11-11 09:36:51.947 +07:00 [INF] [7b1d7efd-2f07-4603-bf9b-762d448e7b90] Executing endpoint 'Source.Controllers.OrderController.CreateOrder (Source)'
+2023-11-11 09:36:51.949 +07:00 [INF] [7b1d7efd-2f07-4603-bf9b-762d448e7b90] Route matched with {action = "CreateOrder", controller = "Order"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateOrder(Common.Dtos.OrderDto) on controller Source.Controllers.OrderController (Source).
+2023-11-11 09:36:51.967 +07:00 [INF] [7b1d7efd-2f07-4603-bf9b-762d448e7b90] Executing StatusCodeResult, setting HTTP status code 200
+2023-11-11 09:36:51.967 +07:00 [INF] [7b1d7efd-2f07-4603-bf9b-762d448e7b90] Executed action Source.Controllers.OrderController.CreateOrder (Source) in 17.6836ms
+2023-11-11 09:36:51.967 +07:00 [INF] [7b1d7efd-2f07-4603-bf9b-762d448e7b90] Executed endpoint 'Source.Controllers.OrderController.CreateOrder (Source)'
+2023-11-11 09:36:51.967 +07:00 [INF] [7b1d7efd-2f07-4603-bf9b-762d448e7b90] HTTP POST /api/Order/CreateOrder responded 200 in 19.7914 ms
+2023-11-11 09:36:51.967 +07:00 [INF] [7b1d7efd-2f07-4603-bf9b-762d448e7b90] Request finished HTTP/1.1 POST http://localhost:5298/api/Order/CreateOrder application/json 67 - 200 0 - 33.5680ms
+2023-11-11 23:05:18.961 +07:00 [INF] [] Application is shutting down...
+2023-11-11 23:09:15.533 +07:00 [INF] [] Now listening on: http://localhost:5298
+2023-11-11 23:09:15.560 +07:00 [INF] [] Application started. Press Ctrl+C to shut down.
+2023-11-11 23:09:15.560 +07:00 [INF] [] Hosting environment: Development
+2023-11-11 23:09:15.560 +07:00 [INF] [] Content root path: /Users/thehappycode/Documents/Programing/POC/src/tracelog/Source
+2023-11-11 23:09:36.285 +07:00 [INF] [e8acdfac-1095-4ede-a96b-093bb5c49362] Request starting HTTP/1.1 POST http://localhost:5298/api/Order/CreateOrder application/json 67
+2023-11-11 23:09:36.308 +07:00 [WRN] [e8acdfac-1095-4ede-a96b-093bb5c49362] Failed to determine the https port for redirect.
+2023-11-11 23:09:36.312 +07:00 [INF] [6f9903d9-2f59-4d53-91cc-6f93c4207628] Executing endpoint 'Source.Controllers.OrderController.CreateOrder (Source)'
+2023-11-11 23:09:36.326 +07:00 [INF] [6f9903d9-2f59-4d53-91cc-6f93c4207628] Route matched with {action = "CreateOrder", controller = "Order"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateOrder(Common.Dtos.OrderDto) on controller Source.Controllers.OrderController (Source).
+2023-11-11 23:09:36.562 +07:00 [INF] [6f9903d9-2f59-4d53-91cc-6f93c4207628] Executing StatusCodeResult, setting HTTP status code 200
+2023-11-11 23:09:36.565 +07:00 [INF] [6f9903d9-2f59-4d53-91cc-6f93c4207628] Executed action Source.Controllers.OrderController.CreateOrder (Source) in 236.9333ms
+2023-11-11 23:09:36.566 +07:00 [INF] [6f9903d9-2f59-4d53-91cc-6f93c4207628] Executed endpoint 'Source.Controllers.OrderController.CreateOrder (Source)'
+2023-11-11 23:09:36.567 +07:00 [INF] [6f9903d9-2f59-4d53-91cc-6f93c4207628] HTTP POST /api/Order/CreateOrder responded 200 in 255.1443 ms
+2023-11-11 23:09:36.571 +07:00 [INF] [6f9903d9-2f59-4d53-91cc-6f93c4207628] Request finished HTTP/1.1 POST http://localhost:5298/api/Order/CreateOrder application/json 67 - 200 0 - 286.8748ms
+2023-11-11 23:10:41.744 +07:00 [INF] [] Application is shutting down...
+2023-11-11 23:11:20.271 +07:00 [INF] [] Now listening on: http://localhost:5298
+2023-11-11 23:11:20.299 +07:00 [INF] [] Application started. Press Ctrl+C to shut down.
+2023-11-11 23:11:20.300 +07:00 [INF] [] Hosting environment: Development
+2023-11-11 23:11:20.300 +07:00 [INF] [] Content root path: /Users/thehappycode/Documents/Programing/POC/src/tracelog/Source
+2023-11-11 23:11:37.675 +07:00 [INF] [] Application is shutting down...
+2023-11-11 23:13:39.989 +07:00 [INF] [] Now listening on: http://localhost:5298
+2023-11-11 23:13:40.016 +07:00 [INF] [] Application started. Press Ctrl+C to shut down.
+2023-11-11 23:13:40.017 +07:00 [INF] [] Hosting environment: Development
+2023-11-11 23:13:40.017 +07:00 [INF] [] Content root path: /Users/thehappycode/Documents/Programing/POC/src/tracelog/Source
+2023-11-11 23:13:53.815 +07:00 [INF] [] Application is shutting down...
+2023-11-11 23:26:36.575 +07:00 [INF] [] Now listening on: http://localhost:5298
+2023-11-11 23:26:36.603 +07:00 [INF] [] Application started. Press Ctrl+C to shut down.
+2023-11-11 23:26:36.603 +07:00 [INF] [] Hosting environment: Development
+2023-11-11 23:26:36.603 +07:00 [INF] [] Content root path: /Users/thehappycode/Documents/Programing/POC/src/tracelog/Source
+2023-11-11 23:27:04.579 +07:00 [INF] [c3a57ffc-3a0a-439d-be82-6a1dc1d9a1d9] Request starting HTTP/1.1 POST http://localhost:5298/api/Order/CreateOrder application/json 67
+2023-11-11 23:27:04.603 +07:00 [WRN] [c3a57ffc-3a0a-439d-be82-6a1dc1d9a1d9] Failed to determine the https port for redirect.
+2023-11-11 23:27:04.607 +07:00 [INF] [263da491-d9d9-4c8a-9537-417673789222] Executing endpoint 'Source.Controllers.OrderController.CreateOrder (Source)'
+2023-11-11 23:27:04.621 +07:00 [INF] [263da491-d9d9-4c8a-9537-417673789222] Route matched with {action = "CreateOrder", controller = "Order"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateOrder(Common.Dtos.OrderDto) on controller Source.Controllers.OrderController (Source).
+2023-11-11 23:27:04.654 +07:00 [INF] [263da491-d9d9-4c8a-9537-417673789222] Start API
+2023-11-11 23:27:04.852 +07:00 [INF] [263da491-d9d9-4c8a-9537-417673789222] End API
+2023-11-11 23:27:04.855 +07:00 [INF] [263da491-d9d9-4c8a-9537-417673789222] Executing StatusCodeResult, setting HTTP status code 200
+2023-11-11 23:27:04.858 +07:00 [INF] [263da491-d9d9-4c8a-9537-417673789222] Executed action Source.Controllers.OrderController.CreateOrder (Source) in 235.204ms
+2023-11-11 23:27:04.859 +07:00 [INF] [263da491-d9d9-4c8a-9537-417673789222] Executed endpoint 'Source.Controllers.OrderController.CreateOrder (Source)'
+2023-11-11 23:27:04.860 +07:00 [INF] [263da491-d9d9-4c8a-9537-417673789222] HTTP POST /api/Order/CreateOrder responded 200 in 252.9620 ms
+2023-11-11 23:27:04.863 +07:00 [INF] [263da491-d9d9-4c8a-9537-417673789222] Request finished HTTP/1.1 POST http://localhost:5298/api/Order/CreateOrder application/json 67 - 200 0 - 285.1518ms
+2023-11-11 23:36:08.859 +07:00 [INF] [] Application is shutting down...
+2023-11-11 23:36:37.386 +07:00 [INF] [] Now listening on: http://localhost:5298
+2023-11-11 23:36:37.422 +07:00 [INF] [] Application started. Press Ctrl+C to shut down.
+2023-11-11 23:36:37.422 +07:00 [INF] [] Hosting environment: Development
+2023-11-11 23:36:37.423 +07:00 [INF] [] Content root path: /Users/thehappycode/Documents/Programing/POC/src/tracelog/Source
+2023-11-11 23:36:44.988 +07:00 [INF] [9712883a-6e48-4ac5-99e7-13ad509c5c59] Request starting HTTP/1.1 POST http://localhost:5298/api/Order/CreateOrder application/json 67
+2023-11-11 23:36:45.010 +07:00 [WRN] [9712883a-6e48-4ac5-99e7-13ad509c5c59] Failed to determine the https port for redirect.
+2023-11-11 23:36:45.014 +07:00 [INF] [2033e591-f6bf-46b7-88c5-583e9f249445] Executing endpoint 'Source.Controllers.OrderController.CreateOrder (Source)'
+2023-11-11 23:36:45.028 +07:00 [INF] [2033e591-f6bf-46b7-88c5-583e9f249445] Route matched with {action = "CreateOrder", controller = "Order"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateOrder(Common.Dtos.OrderDto) on controller Source.Controllers.OrderController (Source).
+2023-11-11 23:36:45.062 +07:00 [INF] [2033e591-f6bf-46b7-88c5-583e9f249445] Start API
+2023-11-11 23:36:45.259 +07:00 [INF] [2033e591-f6bf-46b7-88c5-583e9f249445] End API
+2023-11-11 23:36:45.262 +07:00 [INF] [2033e591-f6bf-46b7-88c5-583e9f249445] Executing StatusCodeResult, setting HTTP status code 200
+2023-11-11 23:36:45.265 +07:00 [INF] [2033e591-f6bf-46b7-88c5-583e9f249445] Executed action Source.Controllers.OrderController.CreateOrder (Source) in 235.0518ms
+2023-11-11 23:36:45.265 +07:00 [INF] [2033e591-f6bf-46b7-88c5-583e9f249445] Executed endpoint 'Source.Controllers.OrderController.CreateOrder (Source)'
+2023-11-11 23:36:45.267 +07:00 [INF] [2033e591-f6bf-46b7-88c5-583e9f249445] HTTP POST /api/Order/CreateOrder responded 200 in 252.6073 ms
+2023-11-11 23:36:45.270 +07:00 [INF] [2033e591-f6bf-46b7-88c5-583e9f249445] Request finished HTTP/1.1 POST http://localhost:5298/api/Order/CreateOrder application/json 67 - 200 0 - 282.8802ms
+2023-11-11 23:37:12.482 +07:00 [INF] [] Application is shutting down...
+2023-11-11 23:52:16.977 +07:00 [INF] [] Now listening on: http://localhost:5263
+2023-11-11 23:52:17.017 +07:00 [INF] [] Application started. Press Ctrl+C to shut down.
+2023-11-11 23:52:17.017 +07:00 [INF] [] Hosting environment: Development
+2023-11-11 23:52:17.017 +07:00 [INF] [] Content root path: /Users/thehappycode/Documents/Programing/POC/src/tracelog/Dentination
+2023-11-11 23:52:23.370 +07:00 [INF] [] Now listening on: http://localhost:5298
+2023-11-11 23:52:23.400 +07:00 [INF] [] Application started. Press Ctrl+C to shut down.
+2023-11-11 23:52:23.400 +07:00 [INF] [] Hosting environment: Development
+2023-11-11 23:52:23.400 +07:00 [INF] [] Content root path: /Users/thehappycode/Documents/Programing/POC/src/tracelog/Source
+2023-11-11 23:52:32.087 +07:00 [INF] [eefc06bf-a68a-47b6-a145-8f24bfc69515] Request starting HTTP/1.1 POST http://localhost:5298/api/Order/CreateOrder application/json 67
+2023-11-11 23:52:32.109 +07:00 [WRN] [eefc06bf-a68a-47b6-a145-8f24bfc69515] Failed to determine the https port for redirect.
+2023-11-11 23:52:32.114 +07:00 [INF] [062ff52a-3385-4c86-b9b8-e58418099c9e] Executing endpoint 'Source.Controllers.OrderController.CreateOrder (Source)'
+2023-11-11 23:52:32.126 +07:00 [INF] [062ff52a-3385-4c86-b9b8-e58418099c9e] Route matched with {action = "CreateOrder", controller = "Order"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateOrder(Common.Dtos.OrderDto) on controller Source.Controllers.OrderController (Source).
+2023-11-11 23:52:32.159 +07:00 [INF] [062ff52a-3385-4c86-b9b8-e58418099c9e] Start API
+2023-11-11 23:52:32.350 +07:00 [INF] [062ff52a-3385-4c86-b9b8-e58418099c9e] End API
+2023-11-11 23:52:32.353 +07:00 [INF] [062ff52a-3385-4c86-b9b8-e58418099c9e] Executing StatusCodeResult, setting HTTP status code 200
+2023-11-11 23:52:32.356 +07:00 [INF] [062ff52a-3385-4c86-b9b8-e58418099c9e] Executed action Source.Controllers.OrderController.CreateOrder (Source) in 227.7525ms
+2023-11-11 23:52:32.357 +07:00 [INF] [062ff52a-3385-4c86-b9b8-e58418099c9e] Executed endpoint 'Source.Controllers.OrderController.CreateOrder (Source)'
+2023-11-11 23:52:32.358 +07:00 [INF] [062ff52a-3385-4c86-b9b8-e58418099c9e] HTTP POST /api/Order/CreateOrder responded 200 in 244.6611 ms
+2023-11-11 23:52:32.361 +07:00 [INF] [062ff52a-3385-4c86-b9b8-e58418099c9e] Request finished HTTP/1.1 POST http://localhost:5298/api/Order/CreateOrder application/json 67 - 200 0 - 275.0954ms
+2023-11-11 23:54:43.362 +07:00 [INF] [] Application is shutting down...
+2023-11-11 23:54:50.250 +07:00 [INF] [] Now listening on: http://localhost:5263
+2023-11-11 23:54:50.290 +07:00 [INF] [] Application started. Press Ctrl+C to shut down.
+2023-11-11 23:54:50.291 +07:00 [INF] [] Hosting environment: Development
+2023-11-11 23:54:50.291 +07:00 [INF] [] Content root path: /Users/thehappycode/Documents/Programing/POC/src/tracelog/Dentination
+2023-11-11 23:54:58.224 +07:00 [INF] [13a202b3-e805-4b78-878f-7f0cf1989a96] Request starting HTTP/1.1 POST http://localhost:5298/api/Order/CreateOrder application/json 67
+2023-11-11 23:54:58.227 +07:00 [INF] [8102faa5-20af-4add-960f-60b5c6202b6d] Executing endpoint 'Source.Controllers.OrderController.CreateOrder (Source)'
+2023-11-11 23:54:58.227 +07:00 [INF] [8102faa5-20af-4add-960f-60b5c6202b6d] Route matched with {action = "CreateOrder", controller = "Order"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateOrder(Common.Dtos.OrderDto) on controller Source.Controllers.OrderController (Source).
+2023-11-11 23:54:58.229 +07:00 [INF] [8102faa5-20af-4add-960f-60b5c6202b6d] Start API
+2023-11-11 23:54:58.242 +07:00 [INF] [8102faa5-20af-4add-960f-60b5c6202b6d] End API
+2023-11-11 23:54:58.243 +07:00 [INF] [8102faa5-20af-4add-960f-60b5c6202b6d] Executing StatusCodeResult, setting HTTP status code 200
+2023-11-11 23:54:58.243 +07:00 [INF] [8102faa5-20af-4add-960f-60b5c6202b6d] Executed action Source.Controllers.OrderController.CreateOrder (Source) in 14.9859ms
+2023-11-11 23:54:58.243 +07:00 [INF] [8102faa5-20af-4add-960f-60b5c6202b6d] Executed endpoint 'Source.Controllers.OrderController.CreateOrder (Source)'
+2023-11-11 23:54:58.243 +07:00 [INF] [8102faa5-20af-4add-960f-60b5c6202b6d] HTTP POST /api/Order/CreateOrder responded 200 in 16.2200 ms
+2023-11-11 23:54:58.243 +07:00 [INF] [8102faa5-20af-4add-960f-60b5c6202b6d] Request finished HTTP/1.1 POST http://localhost:5298/api/Order/CreateOrder application/json 67 - 200 0 - 19.5755ms
+2023-11-11 23:54:59.508 +07:00 [INF] [ed7286f7-6351-4d24-8861-067604496c3e] Request starting HTTP/1.1 POST http://localhost:5298/api/Order/CreateOrder application/json 67
+2023-11-11 23:54:59.510 +07:00 [INF] [b006459a-7b8d-4c60-97e8-6a663ddd2bcc] Executing endpoint 'Source.Controllers.OrderController.CreateOrder (Source)'
+2023-11-11 23:54:59.510 +07:00 [INF] [b006459a-7b8d-4c60-97e8-6a663ddd2bcc] Route matched with {action = "CreateOrder", controller = "Order"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateOrder(Common.Dtos.OrderDto) on controller Source.Controllers.OrderController (Source).
+2023-11-11 23:54:59.512 +07:00 [INF] [b006459a-7b8d-4c60-97e8-6a663ddd2bcc] Start API
+2023-11-11 23:54:59.522 +07:00 [INF] [b006459a-7b8d-4c60-97e8-6a663ddd2bcc] End API
+2023-11-11 23:54:59.522 +07:00 [INF] [b006459a-7b8d-4c60-97e8-6a663ddd2bcc] Executing StatusCodeResult, setting HTTP status code 200
+2023-11-11 23:54:59.522 +07:00 [INF] [b006459a-7b8d-4c60-97e8-6a663ddd2bcc] Executed action Source.Controllers.OrderController.CreateOrder (Source) in 11.9232ms
+2023-11-11 23:54:59.522 +07:00 [INF] [b006459a-7b8d-4c60-97e8-6a663ddd2bcc] Executed endpoint 'Source.Controllers.OrderController.CreateOrder (Source)'
+2023-11-11 23:54:59.522 +07:00 [INF] [b006459a-7b8d-4c60-97e8-6a663ddd2bcc] HTTP POST /api/Order/CreateOrder responded 200 in 12.6050 ms
+2023-11-11 23:54:59.522 +07:00 [INF] [b006459a-7b8d-4c60-97e8-6a663ddd2bcc] Request finished HTTP/1.1 POST http://localhost:5298/api/Order/CreateOrder application/json 67 - 200 0 - 14.6992ms

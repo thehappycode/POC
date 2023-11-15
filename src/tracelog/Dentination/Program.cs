@@ -1,13 +1,23 @@
 using Common.Constants;
+using Common.Dtos;
 using Common.Extensions;
+using Common.Filters;
 using Common.Helpers;
+using Common.Options;
+using Dentination.Consumers;
+using MassTransit;
+using Newtonsoft.Json;
 using Serilog;
-using Serilog.Core;
-using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddControllers();
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddCorrelationIdService();
 
@@ -28,12 +38,62 @@ builder.Host.UseSerilog((context, configuration) =>
         .ReadFrom.Configuration(context.Configuration);
 });
 
+var rabbitMqOptions = builder.Configuration
+    .GetSection(nameof(RabbitMqOptions))
+    .Get<RabbitMqOptions>();
 
-builder.Services.AddControllers();
+// Log.Information($"RabbitMqOptions: {rabbitMqOptions}");
+Console.WriteLine($"RabbitMqOptions: {JsonConvert.SerializeObject(rabbitMqOptions)}");
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// var busControl = Bus.Factory.CreateUsingRabbitMq(configure => 
+// {
+//     configure.Host(
+//         rabbitMqOptions?.Host,
+//         rabbitMqOptions?.VirtualHost,
+//         cfg =>
+//         {
+//             cfg.Username(rabbitMqOptions?.Username);
+//             cfg.Password(rabbitMqOptions?.Password);
+//         });
+
+//     // configure.UseConsumeFilter(typeof(ConsumeFilter<>), context,
+//     //     x => x.Include(type => type.HasInterface<OrderCreatedConsumer>())
+//     // );
+
+//     configure.ReceiveEndpoint("order-created-event", e =>
+//     {
+//         // e.UseConsumeFilter(typeof(ConsumeFilter<>), context);
+//         e.Consumer<OrderCreatedConsumer>();
+//     });
+// });
+
+// await busControl
+//     .StartAsync();
+
+builder.Services.AddScoped(typeof(ConsumeFilter<>));
+builder.Services.AddMassTransit(configure =>
+{
+    // configure.AddConsumer<OrderCreateConsumer>();
+    configure.UsingRabbitMq((ctx, cfg) =>
+    {
+        cfg.Host(
+            rabbitMqOptions?.Host,
+            rabbitMqOptions?.VirtualHost,
+            c =>
+            {
+                c.Username(rabbitMqOptions?.Username);
+                c.Password(rabbitMqOptions?.Password);
+            });
+
+        cfg.ReceiveEndpoint("order-created-event", e =>
+        {
+            e.UseConsumeFilter(typeof(ConsumeFilter<>), ctx);
+            e.Consumer<OrderCreateConsumer>();
+        });
+    });
+});
+
+builder.Services.AddMassTransitHostedService();
 
 var app = builder.Build();
 
