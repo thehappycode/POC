@@ -1,9 +1,15 @@
-using System.Runtime.Serialization.Formatters;
 using Microsoft.AspNetCore.Http;
+using MiniIO.Applcation.Dtos;
+using Minio.DataModel;
+using Minio.DataModel.Response;
 
 namespace MiniIO.Applcation.Interfaces;
 
 public interface IMinIOService
 {
-    Task UploadFilesAsync(IEnumerable<IFormFile> files);
+    Task<PutObjectResponse> UploadFilesAsync(IFormFile file);
+
+    Task<FileDto> DownloadFileAsync(string pathName);
+
+    Task<ObjectStat> GetMetadataAsync(string pathName);
 }

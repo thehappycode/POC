@@ -1,10 +1,12 @@
-using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
+using MiniIO.Applcation.Dtos;
 using MiniIO.Applcation.Interfaces;
 using minio.Options;
 using Minio;
+using Minio.DataModel;
 using Minio.DataModel.Args;
+using Minio.DataModel.Response;
 using Newtonsoft.Json;
 
 namespace MiniIO.Applcation.Services;
@@ -45,39 +47,92 @@ public class MinIOService : IMinIOService
         }
 
     }
-    public async Task UploadFilesAsync(IEnumerable<IFormFile> files)
+
+    public async Task<PutObjectResponse> UploadFilesAsync(IFormFile file)
     {
         await CheckBucketExistsAsync();
         var now = DateTime.Now;
         try
         {
-            foreach (var file in files)
+            var octetStream = MinIOContentType.OctetStream.ToString();
+            Console.WriteLine($"Octet-Stream: {octetStream}");
+            using (MemoryStream memoryStream = new MemoryStream())
             {
+                await file.CopyToAsync(memoryStream);
+                memoryStream.Seek(0, SeekOrigin.Begin);
 
-                var octetStream = MinIOContentType.OctetStream.ToString();
-                Console.WriteLine($"Octet-Stream: {octetStream}");
-                using (MemoryStream memoryStream = new MemoryStream())
-                {
-                    await file.CopyToAsync(memoryStream);
-                    memoryStream.Seek(0, SeekOrigin.Begin);
+                Console.WriteLine($"MinIO Length: {memoryStream.Length}");
+                var putObjectArgs = new PutObjectArgs()
+                    .WithBucket(_minIOOptions.Bucket)
+                    .WithObject($"{now.Year}/{now.Month}/{now.Day}/{Guid.NewGuid()}-{file.FileName}")
+                    .WithStreamData(memoryStream)
+                    .WithObjectSize(memoryStream.Length)
+                    .WithContentType("application/octet-stream");
 
-                    Console.WriteLine($"MinIO Length: {memoryStream.Length}");
-                    var putObjectArgs = new PutObjectArgs()
-                        .WithBucket(_minIOOptions.Bucket)
-                        .WithObject($"{now.Year}/{now.Month}/{now.Day}/{Guid.NewGuid()}-{file.FileName}")
-                        .WithStreamData(memoryStream)
-                        .WithObjectSize(memoryStream.Length)
-                        .WithContentType("application/octet-stream");
+                var result = await _minioClient
+                    .PutObjectAsync(putObjectArgs)
+                    .ConfigureAwait(false);
 
-                    await _minioClient
-                        .PutObjectAsync(putObjectArgs)
-                        .ConfigureAwait(false);
-                }
+                return result;
             }
         }
         catch (Exception ex)
         {
             Console.WriteLine($"UploadFilesAsync.Exception: {ex.Message}");
+            throw;
+        }
+    }
+
+    public async Task<FileDto> DownloadFileAsync(string fileName)
+    {
+        fileName = "2023/11/21/3e504a73-b658-4fcc-b1ef-065d60bb2804-minio.png";
+        Console.WriteLine($"DownloadFileAsync.PathName: {fileName}");
+        await CheckBucketExistsAsync();
+        var metadata = await GetMetadataAsync(fileName);
+        try
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+
+                var getObjectArgs = new GetObjectArgs()
+                    .WithBucket(_minIOOptions.Bucket)
+                    .WithObject(fileName)
+                    .WithCallbackStream(stream =>
+                    {
+                        stream.CopyToAsync(memoryStream);
+                    });
+                // memoryStream.Seek(0, SeekOrigin.Begin);
+
+                var objState = await _minioClient.GetObjectAsync(getObjectArgs);
+                Console.WriteLine($"DownloadFileAsync.MemoryStream: {memoryStream.Length}");
+
+                var result = new FileDto(objState.ObjectName, objState.ContentType, memoryStream.ToArray());
+
+                return result;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"DownloadFileAsync.Exception: {ex.Message}");
+            throw;
+        }
+    }
+
+    public async Task<ObjectStat> GetMetadataAsync(string pathName)
+    {
+        try
+        {
+            var stateObjectArgs = new StatObjectArgs()
+                .WithBucket(_minIOOptions.Bucket)
+                .WithObject(pathName);
+
+            var result = await _minioClient.StatObjectAsync(stateObjectArgs);
+            return result;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"GetMetadataAsync.Exception: {ex.Message}");
+            throw;
         }
     }
 }

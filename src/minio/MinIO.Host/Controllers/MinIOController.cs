@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using MiniIO.Applcation.Dtos;
 using MiniIO.Applcation.Interfaces;
+using Minio.DataModel.Response;
 
 namespace MiniIO.Host.Controllers;
 
@@ -20,8 +22,14 @@ public class MinIOController : ControllerBase
     }
 
     [HttpPost("UploadFileAsync")]
-    public async Task<IActionResult> UploadFileAsync(IEnumerable<IFormFile> files){
-        await _minIOService.UploadFilesAsync(files);
-        return Ok("Upload success");
+    public async Task<ActionResult<PutObjectResponse>> UploadFileAsync(IFormFile file){
+        var result = await _minIOService.UploadFilesAsync(file);
+        return Ok(result);
+    }
+
+    [HttpGet("DownloadFileAsync/{pathName}")]
+    public async Task<ActionResult<FileDto>> DownloadFileAsync(string pathName){
+        var result = await _minIOService.DownloadFileAsync(pathName);
+        return Ok(result);
     }
 }
