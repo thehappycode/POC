@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MiniIO.Applcation.Dtos;
 using MiniIO.Applcation.Interfaces;
+using Minio.DataModel;
 using Minio.DataModel.Response;
 
 namespace MiniIO.Host.Controllers;
@@ -27,9 +28,15 @@ public class MinIOController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("DownloadFileAsync/{pathName}")]
-    public async Task<ActionResult<FileDto>> DownloadFileAsync(string pathName){
-        var result = await _minIOService.DownloadFileAsync(pathName);
+    [HttpGet("DownloadFileAsync/{fileName}")]
+    public async Task<ActionResult<FileDto>> DownloadFileAsync(string fileName){
+        var result = await _minIOService.DownloadFileAsync(fileName);
+        return Ok(result);
+    }
+    
+    [HttpGet("GetMetadataAsync/{fileName}")]
+    public async Task<ActionResult<ObjectStat>> GetMetadataAsync(string fileName){
+        var result = await _minIOService.GetMetadataAsync(fileName);
         return Ok(result);
     }
 }

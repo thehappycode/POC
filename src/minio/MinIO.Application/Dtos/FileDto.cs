@@ -2,10 +2,10 @@ namespace MiniIO.Applcation.Dtos;
 
 public class FileDto
 {
-    private string FileName { get; set; }
-    private string ContentType { get; set; }
-    private byte[] Bytes { get; set; }
-    private string Base64 { get; set; }
+    public string FileName { get; set; }
+    public string ContentType { get; set; }
+    public byte[] Bytes { get; set; }
+    public string Base64 { get; set; }
 
     public FileDto()
     {
@@ -17,7 +17,7 @@ public class FileDto
         FileName = fileName;
         ContentType = contentType;
         Bytes = bytes;
-        Base64 = Convert.ToBase64String(bytes);
+        // Base64 = Convert.ToBase64String(bytes);
     }
 
     private string GetBase64()

@@ -88,7 +88,7 @@ public class MinIOService : IMinIOService
         fileName = "2023/11/21/3e504a73-b658-4fcc-b1ef-065d60bb2804-minio.png";
         Console.WriteLine($"DownloadFileAsync.PathName: {fileName}");
         await CheckBucketExistsAsync();
-        var metadata = await GetMetadataAsync(fileName);
+        await GetMetadataAsync(fileName);
         try
         {
             using (var memoryStream = new MemoryStream())
@@ -101,13 +101,11 @@ public class MinIOService : IMinIOService
                     {
                         stream.CopyToAsync(memoryStream);
                     });
-                // memoryStream.Seek(0, SeekOrigin.Begin);
 
-                var objState = await _minioClient.GetObjectAsync(getObjectArgs);
-                Console.WriteLine($"DownloadFileAsync.MemoryStream: {memoryStream.Length}");
+                var objStat = await _minioClient.GetObjectAsync(getObjectArgs);
+                Console.WriteLine($"DownloadFileAsync.MemoryStream.Length: {memoryStream.Length}");
 
-                var result = new FileDto(objState.ObjectName, objState.ContentType, memoryStream.ToArray());
-
+                var result = new FileDto(objStat.ObjectName, objStat.ContentType, memoryStream.ToArray());
                 return result;
             }
         }
@@ -120,6 +118,8 @@ public class MinIOService : IMinIOService
 
     public async Task<ObjectStat> GetMetadataAsync(string pathName)
     {
+        pathName = "2023/11/21/3e504a73-b658-4fcc-b1ef-065d60bb2804-minio.png";
+
         try
         {
             var stateObjectArgs = new StatObjectArgs()
