@@ -39,4 +39,10 @@ public class MinIOController : ControllerBase
         var result = await _minIOService.GetMetadataAsync(fileName);
         return Ok(result);
     }
+
+        [HttpGet("GetListsAsync/{bucketName}")]
+    public async Task<ActionResult<FileDto>> GetListsAsync(string bucketName){
+        var result = await _minIOService.GetListsAsync(bucketName);
+        return Ok(result);
+    }
 }

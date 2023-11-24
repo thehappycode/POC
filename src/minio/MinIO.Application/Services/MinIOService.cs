@@ -27,15 +27,18 @@ public class MinIOService : IMinIOService
         _minIOOptions = minIOOptions.Value;
     }
 
-    public async Task<bool> CheckBucketExistsAsync()
+    public async Task<bool> CheckBucketExistsAsync(string bucketName = null)
     {
+        if (string.IsNullOrWhiteSpace(bucketName))
+            bucketName = _minIOOptions.Bucket;
         try
         {
             // Make a bucket on the server, if not already present.
             var bucketExistsArgs = new BucketExistsArgs()
-                    .WithBucket(_minIOOptions.Bucket);
-            var isExisting = await _minioClient.BucketExistsAsync(bucketExistsArgs).ConfigureAwait(false);
-            Console.WriteLine($"Bucket {_minIOOptions.Bucket} is existing");
+                    .WithBucket(bucketName);
+            var isExisting = await _minioClient.BucketExistsAsync(bucketExistsArgs);
+            if (!isExisting)
+                throw new Exception($"Bucket {bucketName} is not existed");
 
             return isExisting;
 
@@ -69,9 +72,7 @@ public class MinIOService : IMinIOService
                     .WithObjectSize(memoryStream.Length)
                     .WithContentType("application/octet-stream");
 
-                var result = await _minioClient
-                    .PutObjectAsync(putObjectArgs)
-                    .ConfigureAwait(false);
+                var result = await _minioClient.PutObjectAsync(putObjectArgs);
 
                 return result;
             }
@@ -85,7 +86,7 @@ public class MinIOService : IMinIOService
 
     public async Task<FileDto> DownloadFileAsync(string fileName)
     {
-        fileName = "2023/11/21/3e504a73-b658-4fcc-b1ef-065d60bb2804-minio.png";
+        // fileName = "2023/11/21/3e504a73-b658-4fcc-b1ef-065d60bb2804-minio.png";
         Console.WriteLine($"DownloadFileAsync.PathName: {fileName}");
         await CheckBucketExistsAsync();
         await GetMetadataAsync(fileName);
@@ -132,6 +133,42 @@ public class MinIOService : IMinIOService
         catch (Exception ex)
         {
             Console.WriteLine($"GetMetadataAsync.Exception: {ex.Message}");
+            throw;
+        }
+    }
+
+    public async Task<FileDto> GetListsAsync(string bucketName)
+    {
+        await CheckBucketExistsAsync(bucketName);
+        try
+        {
+            var listObjectArgs = new ListObjectsArgs()
+                .WithBucket(bucketName)
+                .WithPrefix("")
+                .WithRecursive(true);
+
+            IObservable<Item> observable = _minioClient.ListObjectsAsync(listObjectArgs);
+            var subscription = observable.Subscribe(
+                // item => Console.WriteLine("OnNext: {0}", item.Key),
+                async item => {
+                    var fileName = item.Key;
+                    Console.WriteLine("FileName: {0}", fileName);
+                    var fileDto = await DownloadFileAsync(fileName);
+                    Console.WriteLine("FileDto: {0}", fileDto.Bytes.Length);
+                },
+                ex => Console.WriteLine("OnError: {0}", ex.Message),
+                () => Console.WriteLine("OnComplete: {0}")
+            );
+
+            Console.WriteLine($"GetLists");
+
+            return new FileDto();
+
+        }
+        catch (Exception ex)
+        {
+
+            Console.WriteLine($"GetLists.Exception: {ex.Message}");
             throw;
         }
     }

@@ -12,4 +12,6 @@ public interface IMinIOService
     Task<FileDto> DownloadFileAsync(string pathName);
 
     Task<ObjectStat> GetMetadataAsync(string pathName);
+
+    Task<FileDto> GetListsAsync(string bucketName);
 }
