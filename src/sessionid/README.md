@@ -1,5 +1,21 @@
 # Session ID
 
+## Nội dung cần tìm hiểu về session id
+
+- SesionId là gì?
+- Các loại sessionid?
+- Cách tạo ra session id?
+- Mã hoá session id?
+- Lưu trữ session id?
+- Quản lý sesionId?
+- Truyền tải session id giữa server và client / Cách thức hoạt động
+- Bảo mật session id?
+- SessionId và Token
+- Study case
+- Tổng kết
+- Hỏi đáp
+
+
 ## Tài liệu tham khảo
 
 https://www.seobility.net/en/wiki/Session_ID
@@ -27,7 +43,7 @@ Câu hỏi đặt ra là làm sao để server biết được một request đ�
 ## Session ID là gì?
 
 Dịch ra tiếng Việt là "phiên làm việc".
-SessionId là unique number được sever gán cho client qua quá trình request. Id này dùng để định nghĩa (identify) và đánh dấu (track) user đang hoạt động
+SessionId là unique được sever sinh ra và gán cho client qua quá trình request. Id này dùng để định nghĩa (identify) và đánh dấu (track) user đang hoạt động
 
 ## Các loại sesionId?
 
@@ -60,3 +76,11 @@ SessionId là unique number được sever gán cho client qua quá trình reque
 - Cookies
 - Local storage
 - OAuth
+
+## Work-flow
+
+- User gửi request lên server thông qua browser, server sẽ tạo một phiên làm việc gọi là SessionId
+- SessionId sẽ được lưu trữ trong cookies khi server response. Lần request tiếp theo, SessionId sẽ được lấy từ cookies.
+- Server sẽ lưu trữ tất cả dữ liệu user trên cache. Khi đó muốn lấy dữ liệu của user thì ta sẽ fetch theo sessionId được gửi kèm trong mỗi lần request.
+- Không thể chia sẽ cookies giữa các browser
+- Chúng ta có thể set timeout cho session, sau thời gian timeout dữ liệu sẽ tự động được clear.
