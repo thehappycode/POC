@@ -23,26 +23,37 @@ public class MinIOController : ControllerBase
     }
 
     [HttpPost("UploadFileAsync")]
-    public async Task<ActionResult<PutObjectResponse>> UploadFileAsync(IFormFile file){
+    public async Task<IActionResult> UploadFileAsync(IFormFile file)
+    {
         var result = await _minIOService.UploadFilesAsync(file);
         return Ok(result);
     }
 
     [HttpGet("DownloadFileAsync/{fileName}")]
-    public async Task<ActionResult<FileDto>> DownloadFileAsync(string fileName){
+    public async Task<IActionResult> DownloadFileAsync(string fileName)
+    {
         var result = await _minIOService.DownloadFileAsync(fileName);
         return Ok(result);
     }
-    
+
     [HttpGet("GetMetadataAsync/{fileName}")]
-    public async Task<ActionResult<ObjectStat>> GetMetadataAsync(string fileName){
+    public async Task<IActionResult> GetMetadataAsync(string fileName)
+    {
         var result = await _minIOService.GetMetadataAsync(fileName);
         return Ok(result);
     }
 
-        [HttpGet("GetListsAsync/{bucketName}")]
-    public async Task<ActionResult<FileDto>> GetListsAsync(string bucketName){
+    [HttpGet("GetListsAsync/{bucketName}")]
+    public async Task<IActionResult> GetListsAsync(string bucketName)
+    {
         var result = await _minIOService.GetListsAsync(bucketName);
         return Ok(result);
+    }
+
+    [HttpDelete("DeleteFileAsync/{fileName}")]
+    public async Task<IActionResult> DeleteFileAsync(string fileName)
+    {
+        await _minIOService.DeleteFileAsync(fileName);
+        return NoContent();
     }
 }

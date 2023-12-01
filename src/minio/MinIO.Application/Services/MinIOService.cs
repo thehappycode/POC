@@ -86,7 +86,7 @@ public class MinIOService : IMinIOService
 
     public async Task<FileDto> DownloadFileAsync(string fileName)
     {
-        // fileName = "2023/11/21/3e504a73-b658-4fcc-b1ef-065d60bb2804-minio.png";
+        // fileName = "2023/11/21/23fee7f9-949a-42f7-a03f-7b506dd6e43e-minio.png";
         Console.WriteLine($"DownloadFileAsync.PathName: {fileName}");
         await CheckBucketExistsAsync();
         await GetMetadataAsync(fileName);
@@ -119,7 +119,7 @@ public class MinIOService : IMinIOService
 
     public async Task<ObjectStat> GetMetadataAsync(string pathName)
     {
-        pathName = "2023/11/21/3e504a73-b658-4fcc-b1ef-065d60bb2804-minio.png";
+        pathName = "2023/11/21/23fee7f9-949a-42f7-a03f-7b506dd6e43e-minio.png";
 
         try
         {
@@ -150,7 +150,8 @@ public class MinIOService : IMinIOService
             IObservable<Item> observable = _minioClient.ListObjectsAsync(listObjectArgs);
             var subscription = observable.Subscribe(
                 // item => Console.WriteLine("OnNext: {0}", item.Key),
-                async item => {
+                async item =>
+                {
                     var fileName = item.Key;
                     Console.WriteLine("FileName: {0}", fileName);
                     var fileDto = await DownloadFileAsync(fileName);
@@ -171,5 +172,27 @@ public class MinIOService : IMinIOService
             Console.WriteLine($"GetLists.Exception: {ex.Message}");
             throw;
         }
+    }
+
+    public async Task DeleteFileAsync(string pathName)
+    {
+        await CheckBucketExistsAsync();
+        try
+        {
+            pathName = "2023/11/21/23fee7f9-949a-42f7-a03f-7b506dd6e43e-minio.png";
+
+            var args = new RemoveObjectArgs()
+                .WithBucket(_minIOOptions.Bucket)
+                .WithObject(pathName);
+
+            await _minioClient.RemoveObjectAsync(args);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"DeleteFileAsync.Exception: {ex.Message}");
+            throw;
+        }
+
+
     }
 }
