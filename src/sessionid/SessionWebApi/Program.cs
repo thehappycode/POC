@@ -4,11 +4,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDistributedMemoryCache();
 
-builder.Services.AddSession(options =>
+builder.Services.Add¬ession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(1);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
+    options.l
 });
 
 builder.Services.AddControllers();
