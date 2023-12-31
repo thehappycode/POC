@@ -9,7 +9,6 @@ builder.Services.AddSession(options =>
     options.IdleTimeout = TimeSpan.FromMinutes(1);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
-    options.l
 });
 
 builder.Services.AddControllers();
