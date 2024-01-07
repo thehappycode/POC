@@ -14,6 +14,5 @@ echo "Second Index: ${NAME[1]}"
 echo "Third Index: ${NAME[2]}"
 
 # TRUY CAP HET TAT CA CAC PHAN TU
-
 echo "Accessing all index with [*]: ${NAME[*]}"
 echo "Accessing all index with [@]: ${NAME[@]}"
