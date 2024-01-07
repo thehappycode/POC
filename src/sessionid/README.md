@@ -23,6 +23,9 @@ https://www.geeksforgeeks.org/session-vs-token-based-authentication/
 https://www.educative.io/answers/session-based-authentication-vs-token-based-authentication
 https://viblo.asia/p/session-va-token-based-authentication-yMnKMNbNZ7P
 https://viblo.asia/p/su-khac-biet-giua-xac-thuc-dua-tren-session-va-token-1VgZvQ19KAw
+https://viblo.asia/p/json-web-tokens-jwt-vs-sessions-4dbZN0Mg5YM
+https://www.geeksforgeeks.org/session-fixation-attack/
+http://www.cs.toronto.edu/~arnold/427/15s/csc427/owasp/A2/sessionFixation/sessionFixation.html
 
 ## Mở đầu
 

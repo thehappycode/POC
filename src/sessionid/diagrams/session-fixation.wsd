@@ -1,0 +1,22 @@
+@startuml Session Fixation Attack
+
+header Session Fixation
+title Session Fixation 
+
+autonumber
+
+actor "Hacker" as hacker #12A89D
+actor "User" as user #D81B5B
+participant "Website" as db #AF3A94
+
+'Login + create session.
+browser -> server: POST /login (username + password).
+server -> db: Server tạo Session và \nlưu trữ trong Database.
+server --> browser: Return SessionID (Set-Cookie trong Response Headers).
+
+'Next request
+browser -> server: Send request với SessionID (Cookie trong Request Headers).
+server -> db: Check hoặc lấy Profile của user \nđược lưu trong database theo SesionID.
+server --> browser: Send response đến Browser.
+footer %page% of %lastpage%
+@enduml

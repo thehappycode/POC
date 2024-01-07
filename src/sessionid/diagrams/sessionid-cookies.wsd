@@ -1,0 +1,22 @@
+@startuml SessionID - Cookies
+
+header SessionID - Cookies
+title Diagram SessionID - Cookies
+
+autonumber
+
+participant "Browser" as browser #12A89D
+participant "Server" as server #D81B5B
+database "Database" as db #AF3A94
+
+'Login + create session.
+browser -> server: POST /login (username + password).
+server -> db: Server tạo Session và \nlưu trữ trong Database.
+server --> browser: Return SessionID (Set-Cookie trong Response Headers).
+
+'Next request
+browser -> server: Send request với SessionID (Cookie trong Request Headers).
+server -> db: Check hoặc lấy Profile của user \nđược lưu trong database theo SesionID.
+server --> browser: Return response.
+footer %page% of %lastpage%
+@enduml

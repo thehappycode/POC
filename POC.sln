@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FEB20A79-86B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sessionid", "sessionid", "{BBA3DE0E-F59F-4FEA-8757-144800630A04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SessionWebApp", "src\sessionid\SessionWebApp\SessionWebApp.csproj", "{CA74FD6C-BAEB-479E-B4E2-D04458215AA0}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SessionWebApi", "src\sessionid\SessionWebApi\SessionWebApi.csproj", "{2A734184-AF62-401B-8C96-DABC704A0EE5}"
 EndProject
 Global
@@ -20,10 +18,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CA74FD6C-BAEB-479E-B4E2-D04458215AA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CA74FD6C-BAEB-479E-B4E2-D04458215AA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CA74FD6C-BAEB-479E-B4E2-D04458215AA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CA74FD6C-BAEB-479E-B4E2-D04458215AA0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2A734184-AF62-401B-8C96-DABC704A0EE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2A734184-AF62-401B-8C96-DABC704A0EE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A734184-AF62-401B-8C96-DABC704A0EE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -31,7 +25,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BBA3DE0E-F59F-4FEA-8757-144800630A04} = {FEB20A79-86B1-4B1D-A799-C2FCDB6BCB73}
-		{CA74FD6C-BAEB-479E-B4E2-D04458215AA0} = {BBA3DE0E-F59F-4FEA-8757-144800630A04}
 		{2A734184-AF62-401B-8C96-DABC704A0EE5} = {BBA3DE0E-F59F-4FEA-8757-144800630A04}
 	EndGlobalSection
 EndGlobal
