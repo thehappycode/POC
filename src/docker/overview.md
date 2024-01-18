@@ -1,6 +1,6 @@
 # Docker overview
 
-Docker là một nền tảng mở (open platform) dành cho developing, shipping, and running applications. Docker cho phép tách rời từ ứng dụng (application )đến hạ tầng (infrastruce), giúp cho việc phân phối phần (deliver) mền nhanh hơn. Với Docker, bạn có thể quản lý hạ tầng trông cũng giống như bạn quản lý ứng dụng. Bởi vì các lợi ít  Docker mạng lại các phương thức cho shipping, testing, và deploy code, nên bạn sẽ giám đáng kể thời gian khi writing code và running nó trên môi trường production.
+Docker là một nền tảng mở (open platform) dành cho developing, shipping, and running applications. Docker cho phép tách rời từ ứng dụng (application) đến hạ tầng (infrastruce), giúp cho việc phân phối (deliver) phần mền nhanh hơn. Với Docker, bạn có thể quản lý hạ tầng trông cũng giống như bạn quản lý ứng dụng. Bởi vì các lợi ít  Docker mạng lại các phương thức cho shipping, testing, và deploy code, nên bạn sẽ giám đáng kể thời gian khi writing code và running nó trên môi trường production.
 
 ## The Docker platform
 
@@ -18,7 +18,7 @@ Docker cung cấp tooling và một platform để quản lý vòng đời (life
 
 Vòng đời (lifecycle) phát triển của Docker streamlines cho phép các developes làm việc với môi trường chuẩn (standardized) khi sử dụng containers local để cung cấp cho applications và services của bạn. Containers là luồng làm việc (workflow) tuyệt nhất (great) dành cho continuous integration and continuous delivery (CI/CD).
 
-Ví dụ một số kịch bẩn sau (scenario):
+Ví dụ một số kịch bản sau (scenario):
 
 - Các developers của bạn write code và shared công việc của họ với các đồng nghiệp (colleagues) sử dụng Docker containers.
 - Họ sử dụng Docker để push applications của mình vào trong môi trường test để test tự động (automated test) hoặc test thử công (manual test).
