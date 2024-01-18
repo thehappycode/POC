@@ -70,7 +70,39 @@ Bạn có thể tạo một images cho chính mình hoặc bạn sử dụng cá
 
 #### Containers
 
+Container là runnable một image. Bạn có thể tạo, start, stop, move, hoặc delete một container bằng cách sử dụng Docker API hoặc CLI. Bạn có thể connect một container đến một hoặc nhiều network, attach storage của container, hoặc oven create mới image based trên trạng thái hiện tại của container.
 
+Mặc định, một container tương đối bị cô lập với những container khác trên cùng một host machine. Bạn có thể control bằng việc tách rời một container với network, storage, hoặc dưới một lớp subsystems từ một container khác hoặc từ host machine.
+
+Một container được định nghĩa bởi một image là tốt, bạn có thể cung cấp bất kỳ options cấu hình nào khi bạn tạo hoặc start một container. Khi bạn removed một container, bấy kỳ thay đổi trạng thái của container đều không được stored.
+
+##### Example docker run command
+
+Ví dụ bạn run một `ubuntu` container
+
+```docker
+docker run -i -t ubuntu /bin/bash
+```
+
+Khi bạn chạy lệnh trên, luồng diễn ra như sau (giả sự bạn sử dụng default registry configuration)
+
+1. Nếu không có image `ubuntu` ở local, Docker sẽ pull nó từ registry bạn đã cấu hình, giống như bạn tự mình chạy lệnh `docker pull ubuntu` .
+
+2. Docker tạo một new container, giống như bạn tự mình chạy lệnh `docker container create`.
+
+3. Docker chỉ định read-write filesystem đến container, nó là final layer. Cho phép running container tạo hoặc sửa file và thư mực trong local filesystem.
+
+4. Docker tạo một network interface kết nối đến container đến default network, khi bạn không có bất kỳ networking options nào. Nó bao gồm assigning một IP address đến container. Mặc định, containers có thể kết nối đến external networks using host mechine's network connect
+
+5. Docker starts the container và executes `/bin/bash`. Container đang running interactively và attached đến terminal của bạn (due to the `-i` and `-t` flag), bạn có thể input từ bàn phím khi đó Docker logs sẽ output đến terminal của bạn.
+
+6. Khi bạn chạy lệnh `exit`, container sẽ stops nhưng không removed. Bạn có thể start nó lại hoặc remove nó.
+
+## The underlying technology
+
+Docker được viết bằng ngôn ngữ `Go` và nhiều tính năng nâng cao của Linux kernel. Docker sử dụng kỹ thuật gọi là `namespace` cung cấp một workspace cô lập được gọi là container. Khi bạn chạy container, Docker tạo ra một tập hợp namspaces cho containers đó.
+
+Lớp namespaces được cô lập. Mỗi container chạy trong namespace riêng và nó được giới hạn truy cập đến namespace khác.
 
 ## Reference link
 https://docs.docker.com/get-started/overview/
