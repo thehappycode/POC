@@ -51,3 +51,7 @@ Bạn có thể chạy solutions unit test from .NET CLI với dotnet test comma
 ### IDE
 
 Bạn có thể sử dụng Visual Studio hoặc Visual Studio Code, nó có hình ảnh giao diện người dùng cho các chức năng testing. IDE có nhiều tính năng hơn CLI, ví dụ, Live Unit Testing.
+
+## Reference
+
+https://learn.microsoft.com/en-us/dotnet/core/testing/
