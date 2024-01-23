@@ -44,6 +44,88 @@ Writting test dành cho code của bạn sẽ tự nhiên tách rời code của
 
 ## Let's speak the same language
 
+Thật không may, khi `mock` thường được nói đến khi testing. Các following points định nghĩa hầu hết khi writing unit test là kiểu `faker`:
+
+*Fake* - là một thuật ngữ chung dùng để trình bày a `stub` hoặc `mock` object. `stub` hay `mock` sẽ phụ thuộc vào context khi bạn sử dụng nó. Nói cách khác, `fake` có thể là `stub` hoặc `mock`.
+
+*Mock* - Một `mock` object là một `fake` object được trong hệ thống, xác định một unit test có *passed* hoặc *failed*. Mock là khởi đầu (starts out) bằng một Fake cho đến khi nó asserted againts.
+
+*Stub* - Một `stub` là controllable replacement của các dependency tồn tại trong hệ thống. Bởi vì sử dụng một `stub`, bạn có thể test code không cần phân tách với dependency directly. Bởi mặc định,  `stub` là khởi đầu (start out) của `fake`.
+
+```dotnet
+var mockOrder = new MockOrder();
+var purchase = new Purchase(mockOrder);
+
+purchase.ValidateOrders();
+
+Assert.True(purchase.CanBeShipped);
+```
+
+Ví dụ bên trên một `stub` có thể được xem như một `mock`. Trong trường hợp này, nó là `stub`. Bạn có thể passing trong Order, có thể hiểu cho phép instantiate Purchase. Tên MockOrder rất dễ gây nhầm lẫn (misleading) vởi vì order không phải là `mock`.
+
+Tốt hơn bạn nên viết:
+
+```dotnet
+var stubOrder = new FakeOrder();
+var purchase = new Purchase(stubOrder);
+
+purchase.ValidateOrders();
+
+Assert.True(purchase.CanBeShipped);
+```
+
+Đổi tên class MockOrder thành FakeOrder, bạn có một class chung hơn (more generic). Class có thể sử dụng như `mock` hoặc `stub`, sẽ tốt hơn dành cho các test case. Trong ví dụ bên trên, FakeOrder được sử dụng là `stub`. Bạn không được sử dụng FakeOrder trong bất kỳ shape hoặc form trong suốt quá trình assert. FakeOrder được passed vào trong Purchase class là một yêu cầu an toàn cho contructor.
+
+Muốn sử dụng `mock`, bạn có thể viết như sau:
+
+```dotnet
+var mockOrder = new FakeOrder();
+var purchase = new Purchase(mockOrder);
+
+purchase.ValidateOrders();
+
+Assert.True(mockOrder.Validated);
+
+```
+
+Để nhớ về sự khác nhau giửa `mock` với `stub`, đó là `mock` giống như `stub`, nhưng bạn phải assert against the mock object, bạn không cần assert against một `stub`. 
+
+## Best practices
+
+Một số thứ gần như rất quan trọng cho best practices khi viết unit tests.
+
+### Avoid infrastructure dependencies
+
+Đừng thử đưa dependencies vào infrastructure khi writting unit tests. Dependencies làm test chậm và dễ vở, và có thể dành riêng (reserved) nó cho phần integration test. Bạn phải tránh dependenceies trong ứng dụng của bạn bằng cách tìm hiểu [Explicit Dependencies Principle](https://deviq.com/explicit-dependencies-principle) hoặc sử dụng [Dependency Injection](https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection). Bạn có thể giữ unit test trong một project riêng biệt. Với cách tiếp cận này, đảm bảo project unit test của bạn sẽ không references đến dependencies trên infrastructure packages.
+
+### Name your tests
+
+Tên unit test của bạn phải chứa three parts:
+
+- Tên của phương thức tested
+- Kịch bản mà nó tested
+- Hành động mong muốn (expected behavior) khi kịch bản được gọi
+
+#### Why?
+
+
+
+### Arranging your test
+
+### Write minimally passing tests
+
+### Avoid magic strings
+
+### Avoid logic in tests
+
+### Prefer helper methods to setup and teardown
+
+### Avoid multiple acts
+
+### Validate private method by unit testing public method
+
+### Stub statuc references
+
 
 
 ## Reference
