@@ -65,8 +65,7 @@ Giả sử a = 10, b = 20.
 
 | Operator | Description | Example |
 | -------- | ----------- | ------- |
-
-ç
+| `-a` | Toán tử hoặc (**AND**) | [ $a -lt 20 -a $b -gt 100 ] return false |
 | `-o` | Toán tử hoặc (**OR**) | [ $a -lt 20 -o $b -gt 100 ] return true |
 | `!` | Toán tử phủ định | [ !false ] return true |
 
