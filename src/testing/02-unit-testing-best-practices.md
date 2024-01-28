@@ -108,13 +108,126 @@ Tên unit test của bạn phải chứa three parts:
 
 #### Why?
 
+Đặt tên theo một tiêu chuẩn là rất quan trọng bởi vì chúng ta sẽ dẽ chú ý hơn khi test. Test nhiều hơn thì sẽ làm cho code của bạn bạn việc chắn chắn hơn, và các bài test cũng là một nguồn cung cấp documentation. Khi nhìn vào toàn bộ unit test, bạn có thể suy ra (infer) nội dung code của bạn, mà không cần phải đọc từng dòng code. Thêm nữa, khi test chạy lỗi, bạn có thể thấy chính xác kịch bản không thể lường trước được khi viết code.
 
+#### Bad
+
+```dotnet
+[Fact]
+public void Test_Single()
+{
+    var stringCalculator = new StringCalculator();
+
+    var actual = stringCalculator.Add("0");
+
+    Assert.Equal(0, actual);
+}
+```
+
+#### Better
+
+```dotnet
+[Fact]
+public void Add_SingleNumber_ReturnsSameNumber()
+{
+    var stringCalculator = new StringCalculator();
+
+    var actual = stringCalculator.Add("0");
+
+    Assert.Equal(0, actual);
+}
+```
 
 ### Arranging your test
 
+`Arrange`, `Act`, `Assert` là một pattern khi viết unit testing. Đúng như tên gọi, nó bao gồm 3 hành động chính:
+
+- `Arrange` là sắp xếp objects của bạn, create and set cần đưa chúng lên cùng nó rất cần thiết.
+- `Act` là hành động một object
+- `Assert` là kết quả bạn mong muốn
+
+#### Why?
+
+- Chia thành từng phần rõ ràng sẽ giúp việc test từng bước từ *arrange* đến *assert*
+- Code sẽ ít lẫn lộn nhất, hoặc gộp giữa *act* và *assert*.
+
+Khả năng đọc được là rất quan trọng khi bạn viết một bài test. Việc chia tách theo mỗi hành động (actions) bên trong bài test sẽ làm code rõ ràng nổi bật hơn (clearly hightlight) và nó phụ thuộc vào yêu cầu từ code của bạn, và diều bạn khẳng định (assert). Chắc chắc kết hợp một số bước sẽ làm giảm kích thước bài test của bạn, nhưng mục đích cơ bản nhất của bài test là khả năng chắc chắn phải đọc được.
+
+### Bad
+
+```dotnet
+[Fact]
+public void Add_EmptyString_ReturnsZero()
+{
+    // Arrange
+    var stringCalculator = new StringCalculator();
+
+    // Assert
+    Assert.Equal(0, stringCalculator.Add(""));
+}
+```
+
+```dotnet
+[Fact]
+public void Add_EmptyString_ReturnsZero()
+{
+    // Arrange
+    var stringCalculator = new StringCalculator();
+
+    // Act
+    var actual = stringCalculator.Add("");
+
+    // Assert
+    Assert.Equal(0, actual);
+}
+```
+
 ### Write minimally passing tests
 
+Input được sử dụng trong unit test phải đơn giản nhất trong việc xác nhận (verify) hành động hiện tại bạn đang testing.
+
+#### Why?
+
+- Những bài test này sẽ được tái sử dụng nhiều lần trong tương lại trong trường hợp bạn thay đổi codebase
+- Gần nhất với thực hiện hành động testing.
+
+Những bài test gồm nhiều thông tin yêu cầu hơn để pass, bài test sẽ có rủi ro về lỗi khi test và có thể làm cho ý định test của bạn ít rõ ràng hơn. Khi viết bài tests, bạn có thể muốn tập trung vào hành vi (behavior). Setting extra properties trên models hoặc sử dụng giá trị none-zero khi không yêu cầu, chỉ làm mất tập trung khi bạn thử chứng minh bài test.
+
+#### Bad
+
+```dotnet
+[Fact]
+public void Add_SingleNumber_ReturnsSameNumber()
+{
+    var stringCalculator = new StringCalculator();
+
+    var actual = stringCalculator.Add("42");
+
+    Assert.Equal(42, actual);
+}
+```
+
+#### Better
+
+```dotnet
+[Fact]
+public void Add_SingleNumber_ReturnsSameNumber()
+{
+    var stringCalculator = new StringCalculator();
+
+    var actual = stringCalculator.Add("0");
+
+    Assert.Equal(0, actual);
+}
+```
+
 ### Avoid magic strings
+
+Tên biến trong unit test là rất quan trọng, không có gì quan trọng hơn tên biến trong production code. Unit test không chứa **magic strings**
+
+#### Why?
+
+
 
 ### Avoid logic in tests
 
@@ -125,8 +238,6 @@ Tên unit test của bạn phải chứa three parts:
 ### Validate private method by unit testing public method
 
 ### Stub statuc references
-
-
 
 ## Reference
 
