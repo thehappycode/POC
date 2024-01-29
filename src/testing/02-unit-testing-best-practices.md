@@ -223,17 +223,209 @@ public void Add_SingleNumber_ReturnsSameNumber()
 
 ### Avoid magic strings
 
-Tên biến trong unit test là rất quan trọng, không có gì quan trọng hơn tên biến trong production code. Unit test không chứa **magic strings**
+Tên biến trong unit test là rất quan trọng, không có nhiều tứ quan trọng hơn là tên biến trong production code. Unit test không chứa **magic strings**
 
 #### Why?
 
+- Nó ngăn chặn việc kiểm tra bài test trên prodution code với các giá trị đặt biệt.
+- Thể hiện chính xác việc bản thử chứng minh hoàn thành.
 
+Magic string có thể gây lộn xộn khi đọc những bài test của bạn. Nếu bạn nhìn nhận string một cách bình thường, bài test sẽ rất tuyệt với tại vì một giá trị được chọn từ parameter hoặc return. Kiểu giá trị string có thể nhìn như lựa chọn thực hiện một cách chi tiết, hơn là tập trung vào bài test.
+
+Khi bạn viết bài test, bạn có thể nhanh chóng, xác định ý định của bài test. Trong trường hợp magic string, cách tiếp cận tốt nhất là assign giá trị cho constants.
+
+#### Bad
+
+```dotnet
+[Fact]
+public void Add_BigNumber_ThrowsException()
+{
+    var stringCalculator = new StringCalculator();
+
+    Action actual = () => stringCalculator.Add("1001");
+
+    Assert.Throws<OverflowException>(actual);
+}
+```
+
+#### Better
+
+```dotnet
+[Fact]
+void Add_MaximumSumResult_ThrowsOverflowException()
+{
+    var stringCalculator = new StringCalculator();
+    const string MAXIMUM_RESULT = "1001";
+
+    Action actual = () => stringCalculator.Add(MAXIMUM_RESULT);
+
+    Assert.Throws<OverflowException>(actual);
+}
+```
 
 ### Avoid logic in tests
 
+Khi bạn viết unit test, nên trách nối chuổi (string concatenation), logic conditions, như `if`, `while`, `for`, `switch` hoặc các conditions khác.
+
+#### Why?
+
+- Sẽ ít có cơ hội tạo ra bug trong bài test của bạn hơn.
+- Tập trung vào kết quả cuối cùng hơn là tập trung thực hiện chi tiết.
+
+Khi bạn đưa logic vào trong toàn bộ bài test, cơ hội tạo ra một bug cũng cao hơn. Đây là nơi cuối cùng bạn muốn tìm bug trong toàn bộ bài test của bạn. Bạn có thể có tạo ra sự tin tưởng cao hơn khi bài test bạn làm việc, nói cách khác, một khi bạn không tin vào các bài tests. Bài test của bạn không đáng tin, thì nó không cung cấp bất cứ một giá trị nào. Khi một bài test có nhiều lỗi, bạn luôn có cảm giác có cái gì đó không đúng trong code của bạn và bạn không thể bỏ qua nó.
+
+#### Bad
+
+```dotnet
+[Fact]
+public void Add_MultipleNumbers_ReturnsCorrectResults()
+{
+    var stringCalculator = new StringCalculator();
+    var expected = 0;
+    var testCases = new[]
+    {
+        "0,0,0",
+        "0,1,2",
+        "1,2,3"
+    };
+
+    foreach (var test in testCases)
+    {
+        Assert.Equal(expected, stringCalculator.Add(test));
+        expected += 3;
+    }
+}
+```
+
+#### Better
+
+```dotnet
+[Theory]
+[InlineData("0,0,0", 0)]
+[InlineData("0,1,2", 3)]
+[InlineData("1,2,3", 6)]
+public void Add_MultipleNumbers_ReturnsSumOfNumbers(string input, int expected)
+{
+    var stringCalculator = new StringCalculator();
+
+    var actual = stringCalculator.Add(input);
+
+    Assert.Equal(expected, actual);
+}
+```
+
 ### Prefer helper methods to setup and teardown
 
+Nếu bạn yêu cầu một object hoặc một trạng thái gống nhau cho nhiều bài tests, một helper method là thích hợp hơn, sử dung `Setup` và `Teardown` attributes.
+
+#### Why?
+
+- Sẽ ít lộn xộn hơn khi đọc những bài test có tát cả các code giống nhau trong mỗi bài test.
+- Sẽ ít phải setting khi test.
+- Sẽ ít chia sẻ state giữa những bài tests, nó sẽ tạo ra những thứ phụ thuộc không mong muốn giữa những bài tests.
+
+Trong unit testing frameworks, `Setup` được gọi trước mỗi lần khi test trong toàn bộ test suite. Một số người xem nó là một công cụ hữu ít, nhưng nhìn chung nó cồng kềnh và rất khó đọc trong các bài tests. Nhìn chung mỗi bài test sẽ có những yêu cầu khác nhau. Thật không may, khi `Setup` sẽ thiết lập sử dụng những yêu cầu giống hệt nhau cho mỗi bài test.
+
+xUnit đã removed cả `Setup` và `Teardown` ở version 2.x.
+
+#### Bad
+
+```dotnet
+private readonly StringCalculator stringCalculator;
+public StringCalculatorTests()
+{
+    stringCalculator = new StringCalculator();
+}
+```
+
+```dotnet
+// more tests...
+```
+
+```dotnet
+[Fact]
+public void Add_TwoNumbers_ReturnsSumOfNumbers()
+{
+    var result = stringCalculator.Add("0,1");
+
+    Assert.Equal(1, result);
+}
+```
+
+#### Better
+
+```dotnet
+[Fact]
+public void Add_TwoNumbers_ReturnsSumOfNumbers()
+{
+    var stringCalculator = CreateDefaultStringCalculator();
+
+    var actual = stringCalculator.Add("0,1");
+
+    Assert.Equal(1, actual);
+}
+```
+
+```dotnet
+// more tests...
+```
+
+```dotnet
+private StringCalculator CreateDefaultStringCalculator()
+{
+    return new StringCalculator();
+}
+```
+
 ### Avoid multiple acts
+
+Khi bạn viết vài những bài tests, hãy cố gắng chỉ sử dụng duy nhất một `act` trong một bài test. Cách tiếp cận chung nhất để sử dụng chỉ duy nhất một `act` cho một bài là:
+
+- Tạo ra sự chia cắt một bài test cho một `act`.
+- Use parameterized (tham số hóa) tests.
+
+#### Why?
+
+- Khi test lỗi, nó sẽ rõ ràng `act` gây lỗi.
+- Đảm bảo bài test sẽ tập trung duy nhất vào một trường hợp.
+- Cung cấp cho bạn toàn cảnh bức tranh tại sao những bài tests lại lỗi.
+
+Nhiều `act` cần đưa vào duy nhất một khẳng định, nó không bảo vệ được khẳng định này sẽ thực thi được. Trong hầu hết unit testing frameworks, một khẳng định sai trong unit test, thì toàn bộ quá trình test sẽ tự động sai.
+
+#### Bad
+
+```dotnet
+[Fact]
+public void Add_EmptyEntries_ShouldBeTreatedAsZero()
+{
+    // Act
+    var actual1 = stringCalculator.Add("");
+    var actual2 = stringCalculator.Add(",");
+
+    // Assert
+    Assert.Equal(0, actual1);
+    Assert.Equal(0, actual2);
+}
+```
+
+#### Better
+
+```dotnet
+[Theory]
+[InlineData("", 0)]
+[InlineData(",", 0)]
+public void Add_EmptyEntries_ShouldBeTreatedAsZero(string input, int expected)
+{
+    // Arrange
+    var stringCalculator = new StringCalculator();
+
+    // Act
+    var actual = stringCalculator.Add(input);
+
+    // Assert
+    Assert.Equal(expected, actual);
+}
+```
 
 ### Validate private method by unit testing public method
 
