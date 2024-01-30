@@ -55,6 +55,38 @@ Giả sử Alice và Bob là 2 bên muốn giao tiếp với nhau trên kênh no
 
 ## Public-key Encryption
 
+Public-key encryption sử dụng một `private key` bắt buộc phải giữa bí mật để để authentication users và một `public key` có thể public cho bất kỳ ai. Public key và private key có sự quan hệ (linked) về mặt toán học; data khi đã encrypted với public key chỉ có thể được decrypted với private key, và data được signed với private key thì chỉ có thể verified với public key. Public key có thể được cung cấp cho bất kỳ ai; nó được sử dụng dể encrypting data và chuyển đến người nắm giữ private key. Public-key cryptographic algorithms còn được biết đến là asymmetric algorithms bởi vì nó yêu cầu 1 key để encrypt data và yêu cầu môt key khác để decrypt data. Một quy tắc basic cryptographic là cấm (prohibits) là tái sử dụng key, và cả 2 keys phải là duy nhất trong mỗi communication session. Tuy nhiên, khi thực hành, asymmetric keys được tạo với thời gian sống rất lâu (long-lived).
+
+Có hai bên (Alice và Bob) sử dụng public-key encryption như sau: Trước tiên, Alice tạo một cặp public/private key. Nếu Bob muốn chuyển đến Alice một encrypted message, anh ấy sẽ hỏi `public key` của cô ấy. Alice chuyển Bob `public key` của cô áy trên mạng nosecure network, và Bob sử dụng `public key` này để encrypt một message. Bob sẽ chuyển encrypted message sang cho Alice, và cô ấy sẽ decryptes nó bằng cách sử dụng `private key` của cô ấy. Nếu Bob nhận key của Alice trên kênh nosecure chanel, như public network, Bob có thể sẽ bị một cuộc tấn công trung gian (Bob is open to a man-in-the-middle attack). Khi đó, Bob bắt buộc phải xác nhận (verify) với Alice là anh ấy đã copy đúng `public key` của cố ấy.
+
+Trong suốt quá trình trao đổi `public key` của Alice, một unauthorized agent (đại lý, tác nhân) có thể chặn để láy `public key`. Hơn nữa,  agent này cũng chặn encrypted message từ Bob. Tuy nhiên, agent không thể decrypt the message với public key. The message chỉ có thể được decrypted chỉ duy nhất với `private key` của Alice, mà `private key` này ko được trao đổi. Alice cũng không được sử dụng `private key` để encrypt một reply message và chuyển đến Bob, bời vì bấy kỳ ai với `public key` cũng có thể decrypt message. Nếu Alice muốn chuyển một message để phản hồi Bob, thì cô ấy sẽ hỏi Bob `public key` của anh ấy và encrypts message của cô ấy với `public key` của Bob. Khi đó Bob sẽ dùng `private key` của mình để decrypt message từ Alice.
+
+Trong kịch bản (scenario) này, Alice và Bob sử dụng public-key encryption để trao đổi môt secret key (symmetric) và sử dụng secret-key encryption trong suốt session còn lại.
+
+Đây là danh sách so sách chính thức giữa public-key và secret-key cryptgraphic algorithms
+
+- Public-key cryptographic algorithms được sử dụng để **fix buffer size**, trong khi secret-key cryptographic algorithms được sử dụng để **variable-length buffer**.
+
+- Public-key algorithms không thể sử dụng chain data cùng nhau trong streams trong khi secret-key thì có thể, bởi vì chỉ số lượng nhỏ data có thể được encrypted. Do do, asymmetric operations cũng không được sử dụng với các streaming model giống như symmetric operations.
+
+- Public-key encryption có số lượng keyspace (khoảng giá trị của key) lớn hơn nhiều so với secret-key encryption. Do do, public-key encryption khó có thể bị tấn công bằng cách thử cố gắng vét cạn key.
+
+- Public key dễ dàng sử dụng trong hệ thống phân tán, bởi vì chúng ta không cần phải bảo vệ, và có thể cung cấp key cho bất kỳ ai.
+
+- Một số public-key algorithms (RSA và DSA, nhưng không phải Diffie-Hellman) được dùng để tạo digital signatures và có thể xác nhận (verify) được người gủi data.
+
+- Public-key algorithms sẽ rất chậm (very slow) khi so sánh với secret-key algorithms, và nó không được designed để encrypt số lượng lớn data. Public-key algorithms chỉ hửu ích trong việc trao đổi số lượng nhỏ data. Như trường hơp, public-key encryption được dùng để encrypt key và `IV` của secret-key algorithm. Sau đó key và `IV` được trao đổi, secret-key encryption sử dụng trong suốt session còn lại.
+
+.NET cung cấp các classes sau để thực hiện public-key algorithms:
+- RSA
+- ECDsa
+- ECDiffieHellman
+- DSA
+
+RSA cho phép encryption và signing, nhưng DSA chỉ có thể được sử dụng trong signing. DSA nó không an toán bằng RSA, và lời khuyên của chúng tôi là dùng RSA. Diffie-Hellman có thể chỉ được sử dụng khi tạo key (key generation). Nhìn chung, public-key algorithms có nhiều giới hạn hơn trong việc chúng ta sử dụng private-key algorithms.
+
+## Digital Signatures
+
 ## Reference
 
 https://learn.microsoft.com/en-us/dotnet/standard/security/cryptographic-services
