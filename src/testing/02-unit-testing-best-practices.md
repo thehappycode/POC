@@ -429,7 +429,39 @@ public void Add_EmptyEntries_ShouldBeTreatedAsZero(string input, int expected)
 
 ### Validate private method by unit testing public method
 
+Trong hầu hết các trường hợp, bạn sẽ không cần phải test các private method. Private method là thực hiện chi tiết và không bao giờ nó bị tách rời. Tại một số điểm, các public method sẽ gọi private method như để thực hiện một phần công việc. Bạn có thể bạn cần quan tâm kết quả cuối cùng của public method khi gọi vào trong private method.
+
+```dotnet
+public string ParseLogLine(string input)
+{
+    var sanitizedInput = TrimInput(input);
+    return sanitizedInput;
+}
+
+private string TrimInput(string input)
+{
+    return input.Trim();
+}
+```
+
+Hành động đầu tiên khi bạn viết một bài test dành cho `TrimInput` bởi vì bạn muốn chắc chắn phương thức này có thể làm việc như mong muốn. Tuy nhiên, hoàn toàn chắc chắn `ParseLogLine` thao tác `sanitizedInput` sẽ ra kết quả bạn không mong muốn, rendering lại bài test `TrimInput`.
+
+Khi test thực sự có thể không lập lại public facing method `ParseLongLine` bởi vì có thể 
+
+```dotnet
+public void ParseLogLine_StartsAndEndsWithSpace_ReturnsTrimmedResult()
+{
+    var parser = new Parser();
+
+    var result = parser.ParseLogLine(" a ");
+
+    Assert.Equals("a", result);
+}
+```
+
 ### Stub statuc references
+
+
 
 ## Reference
 
