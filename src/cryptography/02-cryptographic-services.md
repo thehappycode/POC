@@ -87,6 +87,76 @@ RSA cho phép encryption và signing, nhưng DSA chỉ có thể được sử d
 
 ## Digital Signatures
 
+Public-key algorithms có thể sử dụng cho mục đích digital signatures. Digital signatures dùng để xác thực định danh người gửi ((authentication the identity of a sender) và giúp bảo vệ tính toàn vẹn của dữ liệu (integrity of data). Sử dụng public key được tạo bởi Alice, dữ liệu được Alice tạo ra có thể được verify người gửi là Alice bằng cách só sánh digital signature từ Alice's data và Alice's public key.  
+
+Sử dụng public-key cryptography để digital sign một message, trước tiên Alice phải áp dụng (applies) một hash algorithm lên message để tạo một message digest. Message digest là thỏa thuận (compact) và duy nhất (unique) trong việc miêu tả dữ liệu. Alice sau khi encrypts the message digest với private key của cô ấy, khi đó cô ấy là personal signature. Khi nhận message và signature, Bob decrypts the signature sử dụng public key của Alice để phục hồi (recover) message digest và hashes the message sử dụng đúng hash algorithm mà Alice dụng. Nếu message digest của Bob trùng khớp với message digest nhận được từ Alice, Bob cần phải chắc chắn message đó đến từ Alice sử dụng private key và dữ liệu sẽ không bị chỉnh sửa. Nếu Bob tin tưởng Alice là người sở hữu private key, và anh ấy biết message đến từ Alice.
+
+.NET cung cấp các classes sau để thực hiện digital signature algorithms sau:
+
+- RSA
+- ECDsa
+- DSA
+
+## Hash Values
+
+Hash algorithms map binary values có chiều bất kỳ (arbitrary length) thành smaller binary values có chiều dài cố định (fixed length) nó được biết đến là hash values. Một hash value là trình bày môt phần của dữ liệu (piece of data). Nếu bạn hash một đoạn văn (paragraph) của plaintext và thay đổi đổi một ký tự trong đoạn văn (paragraph), khi đó một subsequent hash sẽ tạo ra (produce) một giá trị khác. Nếu hash là cryptographically strong, giá trị sẽ thay đổi rất khác biệt. Ví dụ, nếu thay đổi một signle bit của message, một strong hash function có thể tạo ra output khác đến 50%. Nhiều input values có thể hash giống với output value. Tuy nhiên, về mặt tính toán thì không thể tìm thấy 2 input sau khi hash có giá trị giống nhau. 
+
+Ta có 2 bên (Alice và Bob) có thể sử dụng hash function để đảm bảo tính toàn vẹn dữ liệu (integrity data). Họ  chọn một hash algorithm để sign messages của họ. Alice viết một message, và sau đó sẽ tạo một hash cho message đó bằng cách sử dụng giải thuật đã chọn (selected algorithm).
+
+- Alice chuyển plaintext message và hashed message (digital signature) đến Bob. Bob nhận và hashes message và so sánh hash value của anh ấy với hash value mà anh ấy nhận từ Alice. Nếu hash value giống hệt nhau (identical), thì message không bị sửa đổi. Nếu hash values không giống hệt nhau (identical), message đã bị sửa đổi sau khi Alice viết nó.
+  Thật không may, phương thức này không phải là nền tảng (establish) để authenticity người giử (sender). Bất kỳ ai cũng có thể mạo danh (impersonate) Alice và send một message đến Bob. Họ có thể sử dụng cùng một hash algorithm để sign message của họ, và sau tất cả, Bob chỉ có thể xác định (determine) message trùng khớp với signature. Đó là khuông mẫu của một man-in-the-middle attack.
+
+- Alice chuyển plaintext message đến Bob trên một kênh công khai không an toàn (nonsecure public channel). Cô ấy chuyển hash message trên một kênh riêng tư an toàn (secure private channel). Bob nhận plaintext message, hashes nó, và so sánh nó có khác với hash message nhận được trên private channel. Nếu 2 hashes trùng khớp, Bob biết được 2 điều:
+    - Message không bị chỉnh sửa.
+    - Chức thực được người gửi message là Alice.
+Khi hệ thống này làm việc, Alice có thể ẩn hash value gốc (original hash value) với tất cả các bên ngoại trừ Bob.
+
+- Alice chuyển plaintext message đến Bob trên một kênh công khai không an toàn và cũng là kênh hash message của cô ấy công khai được phép đọc trên Website của chính cô ấy.
+  Cách thức này ngăn chặn bất kỳ ai muốn chặn từ việc chỉnh sửa hash value. Mặc dù message và hash có thể được đọc bởi bất kỳ ai, hash value chỉ có thể được thay đổi bới chính Alice. Một người attack muốn mạo danh (impersonate) Alice phải được Website của Alice cho quyền truy cập.
+
+Không như phương thức trước đó, bất kỳ ai cũng có thể chặn để đọc messages của Alices, bởi vì họ trao đổi (transmitted) plaintext. Đây là loại đảm bảo an toàn vì yêu cầu digital signature (message signing) và encryption.
+
+.NET cung cấp các classes sau để thực hiện hashing algorithms
+
+- SHA256
+- SHA384
+- SHA512
+
+.NET cũng cung cấp MD5 và SHA-1. Nhưng giải thuật MD5 và SHA-1 đã tìm được cách giả mã nên không an toàn, và lời khuyên là dùng SHA-2 để thay thế. SHA-2 gồm các loại hashing algorithm được liệt kê bên trên.
+
+## Random Number Generation
+
+Random number generation được tích hợp trong nhiều cryptographic operations. Ví dụ, cryptographic keys cần random key và chắc chắn key đó không thể được tạo lại. Cryptographic random number generation bắt buộc phải tính toán output sao cho không thể dự đoán được. Do đó, bấy kỳ phương thức dự đoán output tiếp theo cũng không thể thực hiện tốt hơn dự đoán random. Trong .NET những classes sử dụng random number generators để tạo cryptographic keys.
+
+Random Number Generator class dùng để thực hiện random number generator algorithm
+
+## ClickOnce Manifests (Bảng kê khai)
+
+Những cryptography classes sau, bạn có thể lấy (obtain) và xác nhận (verify) thông tin về manifest signature dành cho ứng dụng được triển khai sử dụng [ClickOnce technology](https://learn.microsoft.com/en-us/visualstudio/deployment/clickonce-security-and-deployment?view=vs-2022)
+
+- **ManifestSignatureInformation** class để lấy thông tin (obtain information) về một manifest signature, sau đó bạn overloads phương thức **VerifySignature**.
+- Bạn có thể sử dụng **ManifestKinds** enumeration với manifests để verify. Kết quả của verification là một **SignatureVerificationResult** enumeration values. 
+- **ManifestSignatureInformationCollection** class cung cấp một *read-only collection* của **ManifestSignatureInformation** objects của verified signatures.
+
+Hơn nữa, các classes bên dưới cung cấp chính xác signature information:
+
+- **StrongNameSignatureInformation** nắm giữ thông tin strong name signature của một manifest.
+- **AuthenticodeSignatureInformation** miêu tả Authenticode signature information của manifest.
+- **TimestampInformation** chứa thông tin về time stamp trong Authenticode signature.
+- **TrustStatus** cung cấp một cách đơn giản để check một Authenticode signature là đúng.
+
+## Cryptography Next Generation (CNG) Classes
+
+Cryptography Next Generation (CNG) classes cung cấp một managed wrapper around the native CNG functions. (CNG là sự thay thế của CryptoAPI). Classes có "Cng" là môt phẩn của chúng. Trung tâm của CNG wrapper classes là **CngKey**, key chứa trong class, với abstracts the storage và sử dụng CNG keys. Class này bạn có thể lưu trữ một key pair or một pubic key securely và suy ra (refer) nó đã được sử dụng một simple string name. Đường công cơ bản elip (The elliptic curve-base) **ECDsaCng** signature class và **ECDiffieHellmanCng** encryption class có thể sử dụng **CngKey** objects
+
+**CngKey** class được sử dụng rất đa dạng trong các hành động bổ sung (additional operations), bao gồm opening, creating, deleting, và exporting keys. Nó cung cấp việc truy cập (access) phía dưới lớp key handle khi calling native function directly.
+
+.NET cũng bao gồm nhiều hỗ trợ đa dạng CNG base, như sau:
+
+- **CngProvider** maintains a key storage provider.
+- **CngAlgorithm** maintains a CNG algorithm.
+- **CngProperty** maintains frequently used key properties.
+
 ## Reference
 
 https://learn.microsoft.com/en-us/dotnet/standard/security/cryptographic-services
