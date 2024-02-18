@@ -1,5 +1,11 @@
 # Overview
 
+Làm cách nào để các công ty công nghệ muốn bảo vệ các dữ liệu nhạy cảm, các thuật toán quan trọng, bảo vệ bản quyền hay bảo vệ quyền sở hữu trí tuệ cửa một sản phẩm trước công ty đối thủ?
+
+Đó là chủ đề trong buổi tech talk ngày hôm nay, trong chủ dề này chúng ta sẽ tìm hiểu một số cách để che giấu, mã nguồn, phát hiện việc định nghĩa lại hoặc custom logic từ mã nguồn gốc.
+
+Để tất cả anh em có thể dễ hiểu và nắm bắt tốt hơn, chúng ta sẽ đi tìm hiểu trước một số thuật ngữ chuyên ngành sau:
+
 ## Thuật ngữ
 
 ### Assembly (Hợp ngữ) là gì?
@@ -41,6 +47,12 @@ Obfuscator giúp chúng ta bảo vệ an toàn bản quyền sở hữu trí tu�
 ## PreEmptive Protection
 
 ### Features
+
+- `Renaming`: Thay đổi tên biến, tên hàm thành một tên ngẫu nhiên, làm cho `reverse-enginneering` mã trở nên khó hiểu với người đọc.
+- `Anti-tamper` (Chống giả mạo): Xác định và phản hồi với các hành vi định nghĩa lại, hoặc custom logic khi giả mạo mã nguồn ứng dụng.
+- `Anti-debug` (Chống debug): Xác định và phản hòi với các hành vi định nghĩa lại, hoặc custom logic khi debugger trên ứng dụng đang chạy.
+- `Anti-rooted device`: Xác định và phản hồi với các hành vi định nghĩa lại, hoặc custom logic nếu ứng dụng đang chạy trên thiết bị rooted Android
+- `Application expiration behaviors`: Mã hóa `end-of-line` date, xác định và phản hồi các hành vi định nghĩa lại, hoặc custom logic sau khi ứng dụng đã hết hạn.
 
 ## Demo
 
