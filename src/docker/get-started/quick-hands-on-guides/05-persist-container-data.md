@@ -4,7 +4,7 @@ Trong bài hướng dẫn này sẽ chỉ bạn cách duy trì dữ liệu (pers
 
 Docker tách rời tất cả nội dung, code, và dữ liệu trong một container từ filesystem trên local. Khi bạn delete một container, Docker sẽ deletes all tất cả nội dung trong container đó.
 
-![persist-container-data](../../images/persist-container-data.webp)
+![persist-container-data](../../images/persist-container-data.bmp)
 
 Đôi khi, bạn muốn duy trì dữ liệu (persist data) của một container khi được tạo, Như _todo_ application, bạn có thể sử dụng volumes.
 
@@ -18,7 +18,7 @@ $ git clone https://github.com/docker/multi-container-app
 
 Để duy trì dữ liệu (persist data) sau khi delete một container, ta sử dụng một `volume`. Một `volume` là một location ở trong local filesystem của bạn, nó sẽ được quản lý tự động bởi Docker Desktop.
 
-![volume](../../images/volume.webp)
+![volume](../../images/volume.bmp)
 
 Thêm một volume vào project, bạn mở file `compose.yaml`, và uncomment các dòng sau:
 
